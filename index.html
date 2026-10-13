@@ -80,6 +80,18 @@
                 <div class="chat-toolbar">
                     <button class="tool-btn" title="Emoticones">😊 Emoticons</button>
                     <button class="tool-btn" id="btnZumbido" title="¡Mandar un zumbido!">⚡ Zumbido!</button>
+                
+                <!-- Menú desplegable de emoticones -->
+                    <div class="emoticon-menu hidden" id="emoticonMenu">
+                        <button class="emo-btn" data-emo=":)">😊</button>
+                        <button class="emo-btn" data-emo=":D">😃</button>
+                        <button class="emo-btn" data-emo=";)">😉</button>
+                        <button class="emo-btn" data-emo=":(">😢</button>
+                        <button class="emo-btn" data-emo=":P">😛</button>
+                        <button class="emo-btn" data-emo="(L)">❤️</button>
+                        <button class="emo-btn" data-emo=":O">😮</button>
+                        <button class="emo-btn" data-emo="(Y)">👍</button>
+                    </div>
                 </div>
 
                 <!-- Caja de texto para escribir -->
@@ -135,6 +147,33 @@
             } catch (e) {
                 console.log("Error al reproducir audio WebAPI:", e);
             }
+            // Lógica del menú de Emoticones
+        const btnEmoticons = document.getElementById('btnEmoticons');
+        const emoticonMenu = document.getElementById('emoticonMenu');
+
+        btnEmoticons.addEventListener('click', (e) => {
+            e.stopPropagation();
+            emoticonMenu.classList.toggle('hidden');
+        });
+
+        // Cerrar menú si hacés clic afuera
+        document.addEventListener('click', () => {
+            emoticonMenu.classList.add('hidden');
+        });
+
+        emoticonMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Insertar el atajo del emoticón en el cuadro de texto
+        document.querySelectorAll('.emo-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const codigoEmo = button.getAttribute('data-emo');
+                messageInput.value += " " + codigoEmo + " ";
+                messageInput.focus();
+                emoticonMenu.classList.add('hidden');
+            });
+        });
         }
 
         // Función para transformar los atajos clásicos de texto en emojis
