@@ -8,9 +8,11 @@
 body {
     background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
     height: 100vh;
+    height: 100dvh; /* Para que en celulares tome bien la altura real sin que tape la barra */
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 /* Pantalla de Login clásica */
@@ -73,10 +75,12 @@ body {
     display: none !important;
 }
 
-/* Ventana principal estilo Windows */
+/* Ventana principal adaptable a pantalla completa */
 .msn-window {
-    width: 750px;
-    height: 500px;
+    width: 90vw;
+    max-width: 900px;
+    height: 85vh;
+    max-height: 650px;
     background: #ece9d8;
     border: 2px solid #0055ea;
     border-radius: 8px 8px 0 0;
@@ -274,7 +278,7 @@ body {
     border-top: 1px solid #d4d0c8;
     display: flex;
     gap: 5px;
-    position: relative; /* Clave para que el menú flote bien acá */
+    position: relative;
 }
 
 .tool-btn {
@@ -360,6 +364,29 @@ body {
 
 .send-btn:hover {
     background: linear-gradient(to bottom, #e4e2d4 0%, #cbc7b6 100%);
+}
+
+/* RESPONSIVO PARA CELULARES (Pantalla completa real) */
+@media (max-width: 768px) {
+    body {
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    .msn-window {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        max-width: 100%;
+        max-height: 100%;
+        border: none;
+        border-radius: 0;
+    }
+
+    /* Ocultamos el panel de contactos en celulares para que el chat ocupe toda la pantalla */
+    .contact-panel {
+        display: none;
+    }
 }
 
 /* Animación del zumbido temblando */
