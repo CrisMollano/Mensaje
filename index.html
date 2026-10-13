@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSN Messenger 123 - Retro Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Pantalla de Login clásica -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <div class="login-header">
+                <h2>Messenger</h2>
+            </div>
+            <div class="login-body">
+                <p>¿Cómo te querés llamar?</p>
+                <input type="text" id="nombreInput" placeholder="Tu apodo..." autofocus>
+                <button id="loginBtn">Iniciar sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ventana Principal del Chat (Oculta hasta iniciar sesión) -->
+    <div class="msn-window hidden" id="msnWindow">
+        <!-- Barra de título clásica -->
+        <div class="msn-title-bar">
+            <div class="title-left">
+                <span class="msn-icon">🟢</span>
+                <span>MSN Messenger - Ventana de Chat</span>
+            </div>
+            <div class="title-buttons">
+                <button class="win-btn">🗕</button>
+                <button class="win-btn">🗖</button>
+                <button class="win-btn close">✕</button>
+            </div>
+        </div>
+
+        <!-- Cuerpo principal: Contactos + Chat -->
+        <div class="msn-body">
+            
+            <!-- Panel izquierdo: Contactos -->
+            <div class="contact-panel">
+                <div class="user-profile">
+                    <div class="avatar-box">👨‍💻</div>
+                    <div class="user-info">
+                        <strong id="myDisplayName">Tu Nombre</strong>
+                        <small>En línea 🟢</small>
+                    </div>
+                </div>
+                <div class="contact-list-title">Contactos conectados</div>
+                <ul class="contact-list" id="contactList">
+                    <li class="active-contact">
+                        <span class="status-dot">🟢</span> 
+                        <span>Sala General</span>
+                        <small class="sub-status">"El futuro ya llegó..."</small>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Panel derecho: Área de Chat -->
+            <div class="chat-panel">
+                <div class="chat-header">
+                    <div class="chat-avatar">🤖</div>
+                    <div>
+                        <strong>Sala General / Amigos</strong>
+                        <p class="personal-msg">"El futuro ya llegó..."</p>
+                    </div>
+                </div>
+
+                <!-- Historial de mensajes -->
+                <div class="chat-messages" id="chatMessages">
+                    <div class="msg system">
+                        <span><i>Bienvenido al chat del MSN Retro.</i></span>
+                    </div>
+                </div>
+
+                <!-- Barra de herramientas -->
+                <div class="chat-toolbar">
+                    <button class="tool-btn" title="Emoticones">😊 Emoticons</button>
+                    <button class="tool-btn" id="btnZumbido" title="¡Mandar un zumbido!">⚡ Zumbido!</button>
+                </div>
+
+                <!-- Caja de texto para escribir -->
+                <div class="chat-input-area">
+                    <textarea id="messageInput" placeholder="Escribí un mensaje aquí..."></textarea>
+                    <button id="sendBtn" class="send-btn">Enviar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script conectado a Socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        const loginScreen = document.getElementById('loginScreen');
+        const msnWindow = document.getElementById('msnWindow');
+        const nombreInput = document.getElementById('nombreInput');
+        const loginBtn = document.getElementById('loginBtn');
+        const myDisplayName = document.getElementById('myDisplayName');
+        
+        const windowBox = document.getElementById('msnWindow');
+        const btnZumbido = document.getElementById('btnZumbido');
+        const sendBtn = document.getElementById('sendBtn');
+        const messageInput = document.getElementById('messageInput');
+        const chatMessages = document.getElementById('chatMessages');
+
+        let miNombre = "";
+
+        // Función para reproducir el zumbido con el sintetizador interno del navegador (¡limpio e infalible!)
+        function reproducirSonidoZumbido() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime); 
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime + 0.2);
+
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+            } catch (e) {
+                console.log("Error al reproducir audio WebAPI:", e);
+            }
+        }
+
+        function iniciarSesion() {
+            const texto = nombreInput.value.trim();
+            if(!texto) {
+                alert("¡Ponete un nombre che!");
+                return;
+            }
+
+            miNombre = texto;
+            myDisplayName.innerText = miNombre;
+
+            loginScreen.classList.add('hidden');
+            msnWindow.classList.remove('hidden');
+        }
+
+        loginBtn.addEventListener('click', iniciarSesion);
+        nombreInput.addEventListener('keydown', (e) => {
+            if(e.key === 'Enter') iniciarSesion();
+        });
+
+        // Botón Zumbido
+        btnZumbido.addEventListener('click', () => {
+            socket.emit('enviar_zumbido', miNombre);
+        });
+
+        // Recibir zumbido
+        socket.on('recibir_zumbido', (usuarioQueManda) => {
+            windowBox.classList.add('shake');
+            
+            // Disparar el sonido generado por código
+            reproducirSonidoZumbido();
+
+            const div = document.createElement('div');
+            div.classList.add('msg', 'system');
+            div.innerHTML = `<span>⚡ <b>¡${usuarioQueManda || "Alguien"} te ha enviado un zumbido!</b></span>`;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                windowBox.classList.remove('shake');
+            }, 500);
+        });
+
+        // Enviar mensaje
+        function enviarMensaje() {
+            const texto = messageInput.value.trim();
+            if(!texto) return;
+
+            socket.emit('chat_message', { usuario: miNombre, texto: texto });
+            messageInput.value = '';
+        }
+
+        sendBtn.addEventListener('click', enviarMensaje);
+        messageInput.addEventListener('keydown', (e) => {
+            if(e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                enviarMensaje();
+            }
+        });
+
+        // Recibir mensajes
+        socket.on('chat_message', (data) => {
+            const div = document.createElement('div');
+            const esMio = data.usuario === miNombre;
+            
+            div.classList.add('msg', esMio ? 'sent' : 'received');
+            div.innerHTML = `<b>${data.usuario} dice:</b><p>${data.texto}</p>`;
+            
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+    </script>
+</body>
+</html>

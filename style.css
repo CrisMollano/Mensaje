@@ -1,0 +1,348 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Pantalla de Login clásica */
+.login-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #4b6cb7; /* Fondo sólido para que tape todo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Bien arriba para que no se mezcle */
+}
+
+.login-box {
+    width: 320px;
+    background: #ece9d8;
+    border: 2px solid #0055ea;
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.login-header {
+    background: linear-gradient(to bottom, #0055ea 0%, #003092 100%);
+    color: white;
+    padding: 8px 12px;
+    font-weight: bold;
+}
+
+.login-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login-body input {
+    padding: 6px;
+    border: 1px solid #adaa9f;
+    font-size: 13px;
+}
+
+.login-body button {
+    padding: 6px;
+    background: linear-gradient(to bottom, #f3f2e8 0%, #dcd9cb 100%);
+    border: 1px solid #adaa9f;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.login-body button:hover {
+    background: linear-gradient(to bottom, #e4e2d4 0%, #cbc7b6 100%);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Ventana principal estilo Windows */
+.msn-window {
+    width: 750px;
+    height: 500px;
+    background: #ece9d8;
+    border: 2px solid #0055ea;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Barra de título azul clásica */
+.msn-title-bar {
+    background: linear-gradient(to bottom, #0055ea 0%, #003092 100%);
+    color: white;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: default;
+}
+
+.title-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.title-buttons {
+    display: flex;
+    gap: 3px;
+}
+
+.win-btn {
+    background: #ece9d8;
+    border: 1px solid #fff;
+    color: #000;
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.win-btn.close {
+    background: #e81123;
+    color: white;
+    border-color: #a80000;
+}
+
+/* Cuerpo */
+.msn-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Panel izquierdo (Contactos) */
+.contact-panel {
+    width: 240px;
+    background: #f9f8f5;
+    border-right: 1px solid #d4d0c8;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    gap: 10px;
+}
+
+.avatar-box {
+    font-size: 28px;
+    background: #e0e0e0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.user-info strong {
+    font-size: 13px;
+    color: #333;
+}
+
+.user-info small {
+    display: block;
+    color: #666;
+    font-size: 11px;
+}
+
+.contact-list-title {
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #444;
+    background: #e9e5dc;
+}
+
+.contact-list {
+    list-style: none;
+    padding: 5px;
+}
+
+.contact-list li {
+    padding: 6px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.contact-list li:hover {
+    background: #d8e5f8;
+}
+
+.sub-status {
+    display: block;
+    color: #888;
+    font-size: 11px;
+    font-style: italic;
+    margin-left: 18px;
+}
+
+/* Panel de Chat */
+.chat-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #f4f3ec;
+    border-bottom: 1px solid #d4d0c8;
+    gap: 10px;
+}
+
+.chat-avatar {
+    font-size: 32px;
+}
+
+.chat-header strong {
+    font-size: 14px;
+}
+
+.personal-msg {
+    font-size: 11px;
+    color: #666;
+    font-style: italic;
+}
+
+/* Mensajes */
+.chat-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #fff;
+}
+
+.msg {
+    font-size: 13px;
+}
+
+.msg.system {
+    text-align: center;
+    color: #777;
+    font-size: 11px;
+}
+
+.msg.received b {
+    color: #0055ea;
+}
+
+.msg.sent b {
+    color: #b71c1c;
+}
+
+.msg p {
+    margin-top: 2px;
+    padding-left: 5px;
+}
+
+/* Barra de herramientas */
+.chat-toolbar {
+    padding: 5px 10px;
+    background: #f4f3ec;
+    border-top: 1px solid #d4d0c8;
+    display: flex;
+    gap: 5px;
+}
+
+.tool-btn {
+    background: #ece9d8;
+    border: 1px solid #adaa9f;
+    padding: 3px 8px;
+    font-size: 11px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.tool-btn:hover {
+    background: #e1dbcc;
+}
+
+#btnZumbido {
+    background: #ffcccc;
+    border-color: #cc0000;
+    color: #990000;
+    font-weight: bold;
+}
+
+/* Área de input */
+.chat-input-area {
+    display: flex;
+    padding: 8px;
+    background: #f4f3ec;
+    border-top: 1px solid #d4d0c8;
+    gap: 8px;
+    height: 70px;
+}
+
+.chat-input-area textarea {
+    flex: 1;
+    resize: none;
+    border: 1px solid #adaa9f;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 2px;
+}
+
+.send-btn {
+    width: 70px;
+    background: linear-gradient(to bottom, #f3f2e8 0%, #dcd9cb 100%);
+    border: 1px solid #adaa9f;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.send-btn:hover {
+    background: linear-gradient(to bottom, #e4e2d4 0%, #cbc7b6 100%);
+}
+
+/* Animación del zumbido temblando */
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.shake {
+    animation: shake 0.4s;
+}
