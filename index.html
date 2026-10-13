@@ -78,10 +78,10 @@
 
                 <!-- Barra de herramientas -->
                 <div class="chat-toolbar">
-                    <button class="tool-btn" title="Emoticones">😊 Emoticons</button>
+                    <button class="tool-btn" id="btnEmoticons" title="Emoticones">😊 Emoticons</button>
                     <button class="tool-btn" id="btnZumbido" title="¡Mandar un zumbido!">⚡ Zumbido!</button>
                 
-                <!-- Menú desplegable de emoticones -->
+                    <!-- Menú desplegable de emoticones -->
                     <div class="emoticon-menu hidden" id="emoticonMenu">
                         <button class="emo-btn" data-emo=":)">😊</button>
                         <button class="emo-btn" data-emo=":D">😃</button>
@@ -147,7 +147,9 @@
             } catch (e) {
                 console.log("Error al reproducir audio WebAPI:", e);
             }
-            // Lógica del menú de Emoticones
+        }
+
+        // Lógica del menú de Emoticones (¡Fuera de otras funciones!)
         const btnEmoticons = document.getElementById('btnEmoticons');
         const emoticonMenu = document.getElementById('emoticonMenu');
 
@@ -174,7 +176,6 @@
                 emoticonMenu.classList.add('hidden');
             });
         });
-        }
 
         // Función para transformar los atajos clásicos de texto en emojis
         function parsearEmoticones(texto) {
@@ -254,7 +255,6 @@
             
             div.classList.add('msg', esMio ? 'sent' : 'received');
             
-            // Aplicamos el parseo de emoticones al texto del mensaje recibido
             const textoConEmojis = parsearEmoticones(data.texto);
             div.innerHTML = `<b>${data.usuario} dice:</b><p>${textoConEmojis}</p>`;
             
