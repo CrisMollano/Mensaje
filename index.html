@@ -111,7 +111,7 @@
 
         let miNombre = "";
 
-        // Función para reproducir el zumbido con el sintetizador interno del navegador (¡limpio e infalible!)
+        // Función para reproducir el zumbido con el sintetizador interno del navegador
         function reproducirSonidoZumbido() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -135,6 +135,19 @@
             } catch (e) {
                 console.log("Error al reproducir audio WebAPI:", e);
             }
+        }
+
+        // Función para transformar los atajos clásicos de texto en emojis
+        function parsearEmoticones(texto) {
+            return texto
+                .replace(/:\)/g, '😊')
+                .replace(/:D/g, '😃')
+                .replace(/;\)/g, '😉')
+                .replace(/:\(/g, '😢')
+                .replace(/:P/g, '😛')
+                .replace(/\(L\)/gi, '❤️')
+                .replace(/:O/g, '😮')
+                .replace(/\(Y\)/gi, '👍');
         }
 
         function iniciarSesion() {
@@ -165,7 +178,6 @@
         socket.on('recibir_zumbido', (usuarioQueManda) => {
             windowBox.classList.add('shake');
             
-            // Disparar el sonido generado por código
             reproducirSonidoZumbido();
 
             const div = document.createElement('div');
@@ -202,7 +214,10 @@
             const esMio = data.usuario === miNombre;
             
             div.classList.add('msg', esMio ? 'sent' : 'received');
-            div.innerHTML = `<b>${data.usuario} dice:</b><p>${data.texto}</p>`;
+            
+            // Aplicamos el parseo de emoticones al texto del mensaje recibido
+            const textoConEmojis = parsearEmoticones(data.texto);
+            div.innerHTML = `<b>${data.usuario} dice:</b><p>${textoConEmojis}</p>`;
             
             chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
