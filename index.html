@@ -36,19 +36,29 @@
                 <button class="win-btn close">✕</button>
             </div>
         </div>
+
+        <!-- Notificación emergente retro estilo MSN -->
+        <div id="msnToast" class="msn-toast hidden">
+            <div class="toast-avatar">👤</div>
+            <div class="toast-content">
+                <strong id="toastUser">Nombre</strong>
+                <p id="toastMessage">Te ha enviado un mensaje...</p>
+            </div>
+        </div>
+
         <!-- Barra de perfil para celulares (solo se ve en pantallas chicas) -->
-<div class="mobile-profile-bar">
-    <div class="mobile-status-container">
-        <select id="statusSelectMobile" class="status-select">
-            <option value="online">🟢 En línea</option>
-            <option value="busy">🔴 Ocupado</option>
-            <option value="away">🟡 Ausente</option>
-        </select>
-    </div>
-    <div class="mobile-substatus-container">
-        <input type="text" id="personalMsgInputMobile" placeholder="Tu frase personal..." maxlength="60">
-    </div>
-</div>
+        <div class="mobile-profile-bar">
+            <div class="mobile-status-container">
+                <select id="statusSelectMobile" class="status-select">
+                    <option value="online">🟢 En línea</option>
+                    <option value="busy">🔴 Ocupado</option>
+                    <option value="away">🟡 Ausente</option>
+                </select>
+            </div>
+            <div class="mobile-substatus-container">
+                <input type="text" id="personalMsgInputMobile" placeholder="Tu frase personal..." maxlength="60">
+            </div>
+        </div>
 
         <!-- Cuerpo principal: Contactos + Chat -->
         <div class="msn-body">
@@ -59,7 +69,7 @@
                     <div class="avatar-box">👨‍💻</div>
                     <div class="user-info">
                         <strong id="myDisplayName">Tu Nombre</strong>
-                       <!-- Selector de Estado -->
+                        <!-- Selector de Estado -->
                         <select id="statusSelect" class="status-select">
                             <option value="online">🟢 En línea</option>
                             <option value="busy">🔴 Ocupado</option>
@@ -167,7 +177,7 @@
             }
         }
 
-        // Lógica del menú de Emoticones (¡Fuera de otras funciones!)
+        // Lógica del menú de Emoticones
         const btnEmoticons = document.getElementById('btnEmoticons');
         const emoticonMenu = document.getElementById('emoticonMenu');
 
@@ -176,7 +186,6 @@
             emoticonMenu.classList.toggle('hidden');
         });
 
-        // Cerrar menú si hacés clic afuera
         document.addEventListener('click', () => {
             emoticonMenu.classList.add('hidden');
         });
@@ -185,7 +194,6 @@
             e.stopPropagation();
         });
 
-        // Insertar el atajo del emoticón en el cuadro de texto
         document.querySelectorAll('.emo-btn').forEach(button => {
             button.addEventListener('click', () => {
                 const codigoEmo = button.getAttribute('data-emo');
@@ -195,7 +203,6 @@
             });
         });
 
-        // Función para transformar los atajos clásicos de texto en emojis
         function parsearEmoticones(texto) {
             return texto
                 .replace(/:\)/g, '😊')
@@ -235,7 +242,6 @@
         // Recibir zumbido
         socket.on('recibir_zumbido', (usuarioQueManda) => {
             windowBox.classList.add('shake');
-            
             reproducirSonidoZumbido();
 
             const div = document.createElement('div');
@@ -266,7 +272,25 @@
             }
         });
 
-        // Recibir mensajes
+        // Notificaciones emergentes (Toast)
+        const msnToast = document.getElementById('msnToast');
+        const toastUser = document.getElementById('toastUser');
+        const toastMessage = document.getElementById('toastMessage');
+        let toastTimeout;
+
+        function mostrarNotificacion(usuario, texto) {
+            toastUser.textContent = usuario;
+            toastMessage.textContent = texto;
+            
+            msnToast.classList.remove('hidden');
+            clearTimeout(toastTimeout);
+
+            toastTimeout = setTimeout(() => {
+                msnToast.classList.add('hidden');
+            }, 4000);
+        }
+
+        // Recibir mensajes (Unificado con la ventana emergente)
         socket.on('chat_message', (data) => {
             const div = document.createElement('div');
             const esMio = data.usuario === miNombre;
@@ -278,50 +302,47 @@
             
             chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Si el mensaje es de otra persona, mostramos el cartelito
+            if (!esMio) {
+                mostrarNotificacion(data.usuario, data.texto);
+            }
         });
-        // Referencias a los nuevos elementos
+
+        // Gestión unificada de Perfil (PC y Celular sincronizados)
         const statusSelect = document.getElementById('statusSelect');
         const personalMsgInput = document.getElementById('personalMsgInput');
+        const statusSelectMobile = document.getElementById('statusSelectMobile');
+        const personalMsgInputMobile = document.getElementById('personalMsgInputMobile');
 
-        // Enviar cambio de estado o frase personal al servidor
         function actualizarMiPerfil() {
-            const estado = statusSelect.value;
-            const frase = personalMsgInput.value.trim();
+            const estado = statusSelect.value || statusSelectMobile.value;
+            const frase = personalMsgInput.value.trim() || personalMsgInputMobile.value.trim();
+            
+            if(statusSelect) statusSelect.value = estado;
+            if(statusSelectMobile) statusSelectMobile.value = estado;
+            if(personalMsgInput) personalMsgInput.value = frase;
+            if(personalMsgInputMobile) personalMsgInputMobile.value = frase;
+
             socket.emit('actualizar_perfil', { estado, frase });
         }
 
-        statusSelect.addEventListener('change', actualizarMiPerfil);
-        personalMsgInput.addEventListener('change', actualizarMiPerfil);
-        personalMsgInput.addEventListener('keydown', (e) => {
-            if(e.key === 'Enter') {
-                personalMsgInput.blur(); // Desenfocar al presionar Enter
-            }
-        });
-        // Sincronizar selectores y inputs de PC y Celular
-const statusSelectMobile = document.getElementById('statusSelectMobile');
-const personalMsgInputMobile = document.getElementById('personalMsgInputMobile');
-
-function actualizarMiPerfil() {
-    const estado = statusSelect.value || statusSelectMobile.value;
-    const frase = personalMsgInput.value.trim() || personalMsgInputMobile.value.trim();
-    
-    // Sincronizar ambos lados visualmente
-    if(statusSelect) statusSelect.value = estado;
-    if(statusSelectMobile) statusSelectMobile.value = estado;
-    if(personalMsgInput) personalMsgInput.value = frase;
-    if(personalMsgInputMobile) personalMsgInputMobile.value = frase;
-
-    // Enviar al servidor por socket
-    socket.emit('actualizar_perfil', { estado, frase });
-}
-
-if(statusSelectMobile) statusSelectMobile.addEventListener('change', actualizarMiPerfil);
-if(personalMsgInputMobile) {
-    personalMsgInputMobile.addEventListener('change', actualizarMiPerfil);
-    personalMsgInputMobile.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter') personalMsgInputMobile.blur();
-    });
-}
+        if(statusSelect) statusSelect.addEventListener('change', actualizarMiPerfil);
+        if(statusSelectMobile) statusSelectMobile.addEventListener('change', actualizarMiPerfil);
+        
+        if(personalMsgInput) {
+            personalMsgInput.addEventListener('change', actualizarMiPerfil);
+            personalMsgInput.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter') personalMsgInput.blur();
+            });
+        }
+        
+        if(personalMsgInputMobile) {
+            personalMsgInputMobile.addEventListener('change', actualizarMiPerfil);
+            personalMsgInputMobile.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter') personalMsgInputMobile.blur();
+            });
+        }
     </script>
 </body>
 </html>

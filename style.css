@@ -467,3 +467,52 @@ body {
 .shake {
     animation: shake 0.4s;
 }
+/* Notificación emergente (Pop-up estilo MSN) */
+.msn-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 250px;
+    background: linear-gradient(to bottom, #fdfbf7 0%, #eb3922e3 0%, #ece9d8 100%);
+    border: 2px solid #0055ea;
+    border-radius: 6px 6px 0 0;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    z-index: 10000;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.msn-toast.hidden {
+    display: none !important;
+}
+
+.toast-avatar {
+    font-size: 24px;
+    background: #fff;
+    border: 1px solid #adaa9f;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.toast-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.toast-content strong {
+    font-size: 12px;
+    color: #003092;
+}
+
+.toast-content p {
+    font-size: 11px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
+}
