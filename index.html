@@ -24,13 +24,18 @@
 
     <!-- Ventana Principal del Chat (Oculta hasta iniciar sesión) -->
     <div class="msn-window hidden" id="msnWindow">
-        <!-- Barra de título clásica -->
+        <!-- Barra de título clásica (Limpia y sin botones inútiles) -->
         <div class="msn-title-bar">
             <div class="title-left">
                 <span class="msn-icon">🟢</span>
                 <span>MSN Messenger - Ventana de Chat</span>
             </div>
-            
+        </div>
+
+        <!-- Selector de color de ventana estilo MSN Plus -->
+        <div class="theme-picker" style="padding: 6px 10px; background: #ece9d8; border-bottom: 1px solid #ccc; display: flex; align-items: center; gap: 8px; font-size: 12px;">
+            <span>Color de tema:</span>
+            <input type="color" id="windowColorPicker" value="#0055ea" style="cursor: pointer; border: 1px solid #7f9db9; background: white; width: 30px; height: 20px;">
         </div>
 
         <!-- Notificación emergente retro estilo MSN -->
@@ -431,6 +436,34 @@
             personalMsgInputMobile.addEventListener('keydown', (e) => {
                 if(e.key === 'Enter') personalMsgInputMobile.blur();
             });
+        }
+
+        // Lógica para cambiar el color de la ventana estilo MSN Plus
+        const colorPicker = document.getElementById('windowColorPicker');
+        const msnTitleBar = document.querySelector('.msn-title-bar');
+
+        const colorGuardado = localStorage.getItem('msn_window_color');
+        if (colorGuardado) {
+            aplicarColorTema(colorGuardado);
+            if(colorPicker) colorPicker.value = colorGuardado;
+        }
+
+        if(colorPicker) {
+            colorPicker.addEventListener('input', (e) => {
+                const nuevoColor = e.target.value;
+                aplicarColorTema(nuevoColor);
+                localStorage.setItem('msn_window_color', nuevoColor);
+            });
+        }
+
+        function aplicarColorTema(colorHex) {
+            if (msnTitleBar) {
+                msnTitleBar.style.background = `linear-gradient(to right, ${colorHex}, #ffffff)`;
+            }
+            const sendBtn = document.getElementById('sendBtn');
+            if (sendBtn) {
+                sendBtn.style.backgroundColor = colorHex;
+            }
         }
     </script>
 </body>
