@@ -112,8 +112,8 @@ body {
 /* Selector de tema */
 .theme-picker {
     padding: 4px 10px;
-    background: #ece9d8;
-    border-bottom: 2px solid #808080;
+    background: transparent; /* Permite ver el color de fondo elegido */
+    border-bottom: 2px solid rgba(0,0,0,0.15);
     display: flex;
     align-items: center;
     gap: 8px;

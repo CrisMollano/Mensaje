@@ -443,33 +443,38 @@
         }
 
        function aplicarColorTema(colorHex) {
-            // Pintar la barra de título superior
+            // 1. Barra de título superior con gradiente
             if (msnTitleBar) {
                 msnTitleBar.style.background = `linear-gradient(to right, ${colorHex}, #ffffff)`;
             }
-            // Pintar el botón de enviar
+
+            // 2. Fondo general de la ventana y del cuerpo (reemplaza el beige fijo)
+            const msnWindow = document.getElementById('msnWindow');
+            if (msnWindow) msnWindow.style.backgroundColor = colorHex;
+
+            const msnBody = document.querySelector('.msn-body');
+            if (msnBody) msnBody.style.backgroundColor = colorHex;
+
+            const themePicker = document.querySelector('.theme-picker');
+            if (themePicker) themePicker.style.backgroundColor = colorHex;
+
+            const chatToolbar = document.querySelector('.chat-toolbar');
+            if (chatToolbar) chatToolbar.style.backgroundColor = colorHex;
+
+            const chatInputArea = document.querySelector('.chat-input-area');
+            if (chatInputArea) chatInputArea.style.backgroundColor = colorHex;
+
+            // 3. Bordes biselados 3D de las cajas
+            document.querySelectorAll('.contact-panel, .chat-header, .chat-messages, .chat-input-area textarea').forEach(el => {
+                el.style.borderTopColor = colorHex;
+                el.style.borderLeftColor = colorHex;
+            });
+
+            // 4. Botón de enviar
             const sendBtn = document.getElementById('sendBtn');
             if (sendBtn) {
                 sendBtn.style.backgroundColor = colorHex;
             }
-
-            // Pintar los bordes biselados 3D de los paneles
-            document.querySelectorAll('.contact-panel').forEach(el => {
-                el.style.borderTopColor = colorHex;
-                el.style.borderLeftColor = colorHex;
-            });
-            document.querySelectorAll('.chat-header').forEach(el => {
-                el.style.borderTopColor = colorHex;
-                el.style.borderLeftColor = colorHex;
-            });
-            document.querySelectorAll('.chat-messages').forEach(el => {
-                el.style.borderTopColor = colorHex;
-                el.style.borderLeftColor = colorHex;
-            });
-            document.querySelectorAll('.chat-input-area textarea').forEach(el => {
-                el.style.borderTopColor = colorHex;
-                el.style.borderLeftColor = colorHex;
-            });
         }
     </script>
 </body>
