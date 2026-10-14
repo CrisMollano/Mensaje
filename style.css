@@ -206,6 +206,39 @@ body {
     margin-left: 18px;
 }
 
+/* Selector de Estado y Frase Personal */
+.status-select {
+    background: transparent;
+    border: none;
+    font-size: 11px;
+    color: #444;
+    cursor: pointer;
+    outline: none;
+    margin-top: 2px;
+}
+
+.personal-substatus-box {
+    padding: 6px 10px;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.personal-substatus-box input {
+    width: 100%;
+    border: 1px transparent;
+    font-size: 11px;
+    font-style: italic;
+    color: #666;
+    outline: none;
+    background: transparent;
+}
+
+.personal-substatus-box input:hover,
+.personal-substatus-box input:focus {
+    border: 1px solid #adaa9f;
+    background: #fff;
+}
+
 /* Panel de Chat */
 .chat-panel {
     flex: 1;
@@ -366,6 +399,11 @@ body {
     background: linear-gradient(to bottom, #e4e2d4 0%, #cbc7b6 100%);
 }
 
+/* Ocultar barra móvil en la PC por defecto */
+.mobile-profile-bar {
+    display: none;
+}
+
 /* RESPONSIVO PARA CELULARES (Pantalla completa real) */
 @media (max-width: 768px) {
     body {
@@ -387,13 +425,8 @@ body {
     .contact-panel {
         display: none;
     }
-    /* Ocultar barra móvil en PC por defecto */
-.mobile-profile-bar {
-    display: none;
-}
 
-/* Mostrar y adaptar solo en pantallas chicas (celulares) */
-@media (max-width: 768px) {
+    /* Mostrar barra móvil adaptada en celulares */
     .mobile-profile-bar {
         display: flex;
         flex-direction: column;
@@ -415,7 +448,6 @@ body {
         outline: none;
     }
 }
-}
 
 /* Animación del zumbido temblando */
 @keyframes shake {
@@ -434,36 +466,4 @@ body {
 
 .shake {
     animation: shake 0.4s;
-/* Selector de Estado y Frase Personal */
-.status-select {
-    background: transparent;
-    border: none;
-    font-size: 11px;
-    color: #444;
-    cursor: pointer;
-    outline: none;
-    margin-top: 2px;
-}
-
-.personal-substatus-box {
-    padding: 6px 10px;
-    background: #fff;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.personal-substatus-box input {
-    width: 100%;
-    border: 1px transparent;
-    font-size: 11px;
-    font-style: italic;
-    color: #666;
-    outline: none;
-    background: transparent;
-}
-
-.personal-substatus-box input:hover,
-.personal-substatus-box input:focus {
-    border: 1px solid #adaa9f;
-    background: #fff;
-}
 }
