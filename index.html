@@ -212,16 +212,24 @@
         });
 
         function parsearEmoticones(texto) {
-            return texto
-                .replace(/:\)/g, '😊')
-                .replace(/:D/g, '😃')
-                .replace(/;\)/g, '😉')
-                .replace(/:\(/g, '😢')
-                .replace(/:P/g, '😛')
-                .replace(/\(L\)/gi, '❤️')
-                .replace(/:O/g, '😮')
-                .replace(/\(Y\)/gi, '👍');
-        }
+    return texto
+        .replace(/:\)/g, '😊')
+        .replace(/:D/g, '😃')
+        .replace(/;\)/g, '😉')
+        .replace(/:\(/g, '😢')
+        .replace(/:P/g, '😛')
+        .replace(/\(L\)/gi, '❤️')
+        .replace(/:O/g, '😮')
+        .replace(/\(Y\)/gi, '👍')
+        .replace(/:\$/g, '😳')
+        .replace(/\(A\)/gi, '😇')
+        .replace(/\(6\)/g, '😈')
+        .replace(/\(\*\)/g, '⭐')
+        .replace(/\(#\)/g, '☀️')
+        .replace(/\(8\)/g, '🎵')
+        .replace(/\(C\)/gi, '☕')
+        .replace(/:'\(/g, '😂');
+}
 
         function iniciarSesion() {
             const texto = nombreInput.value.trim();

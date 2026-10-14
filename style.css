@@ -344,9 +344,10 @@ body {
     box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     padding: 8px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
     gap: 5px;
     z-index: 100;
+    max-width: 180px;
 }
 
 .emoticon-menu.hidden {
