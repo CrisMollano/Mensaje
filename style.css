@@ -387,6 +387,34 @@ body {
     .contact-panel {
         display: none;
     }
+    /* Ocultar barra móvil en PC por defecto */
+.mobile-profile-bar {
+    display: none;
+}
+
+/* Mostrar y adaptar solo en pantallas chicas (celulares) */
+@media (max-width: 768px) {
+    .mobile-profile-bar {
+        display: flex;
+        flex-direction: column;
+        background: #f1efe2;
+        padding: 5px 10px;
+        border-bottom: 1px solid #d2d0c1;
+        gap: 3px;
+    }
+    
+    .mobile-substatus-container input {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 2px 5px;
+        font-size: 11px;
+        font-style: italic;
+        background: #fff;
+        color: #555;
+        outline: none;
+    }
+}
 }
 
 /* Animación del zumbido temblando */

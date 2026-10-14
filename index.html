@@ -36,6 +36,19 @@
                 <button class="win-btn close">✕</button>
             </div>
         </div>
+        <!-- Barra de perfil para celulares (solo se ve en pantallas chicas) -->
+<div class="mobile-profile-bar">
+    <div class="mobile-status-container">
+        <select id="statusSelectMobile" class="status-select">
+            <option value="online">🟢 En línea</option>
+            <option value="busy">🔴 Ocupado</option>
+            <option value="away">🟡 Ausente</option>
+        </select>
+    </div>
+    <div class="mobile-substatus-container">
+        <input type="text" id="personalMsgInputMobile" placeholder="Tu frase personal..." maxlength="60">
+    </div>
+</div>
 
         <!-- Cuerpo principal: Contactos + Chat -->
         <div class="msn-body">
@@ -284,6 +297,31 @@
                 personalMsgInput.blur(); // Desenfocar al presionar Enter
             }
         });
+        // Sincronizar selectores y inputs de PC y Celular
+const statusSelectMobile = document.getElementById('statusSelectMobile');
+const personalMsgInputMobile = document.getElementById('personalMsgInputMobile');
+
+function actualizarMiPerfil() {
+    const estado = statusSelect.value || statusSelectMobile.value;
+    const frase = personalMsgInput.value.trim() || personalMsgInputMobile.value.trim();
+    
+    // Sincronizar ambos lados visualmente
+    if(statusSelect) statusSelect.value = estado;
+    if(statusSelectMobile) statusSelectMobile.value = estado;
+    if(personalMsgInput) personalMsgInput.value = frase;
+    if(personalMsgInputMobile) personalMsgInputMobile.value = frase;
+
+    // Enviar al servidor por socket
+    socket.emit('actualizar_perfil', { estado, frase });
+}
+
+if(statusSelectMobile) statusSelectMobile.addEventListener('change', actualizarMiPerfil);
+if(personalMsgInputMobile) {
+    personalMsgInputMobile.addEventListener('change', actualizarMiPerfil);
+    personalMsgInputMobile.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter') personalMsgInputMobile.blur();
+    });
+}
     </script>
 </body>
 </html>
