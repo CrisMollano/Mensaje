@@ -110,24 +110,24 @@
                     <button class="tool-btn" id="btnZumbido" title="¡Mandar un zumbido!">⚡ Zumbido!</button>
                 
                     <!-- Menú desplegable de emoticones ampliado -->
-<div class="emoticon-menu hidden" id="emoticonMenu">
-    <button class="emo-btn" data-emo=":)">😊</button>
-    <button class="emo-btn" data-emo=":D">😃</button>
-    <button class="emo-btn" data-emo=";)">😉</button>
-    <button class="emo-btn" data-emo=":(">😢</button>
-    <button class="emo-btn" data-emo=":P">😛</button>
-    <button class="emo-btn" data-emo="(L)">❤️</button>
-    <button class="emo-btn" data-emo=":O">😮</button>
-    <button class="emo-btn" data-emo="(Y)">👍</button>
-    <button class="emo-btn" data-emo=":$">😳</button>
-    <button class="emo-btn" data-emo="(A)">😇</button>
-    <button class="emo-btn" data-emo="(6)">😈</button>
-    <button class="emo-btn" data-emo="(*)">⭐</button>
-    <button class="emo-btn" data-emo="(#)">☀️</button>
-    <button class="emo-btn" data-emo="(8)">🎵</button>
-    <button class="emo-btn" data-emo="(C)">☕</button>
-    <button class="emo-btn" data-emo=":'(">😂</button>
-</div>
+                    <div class="emoticon-menu hidden" id="emoticonMenu">
+                        <button class="emo-btn" data-emo=":)">😊</button>
+                        <button class="emo-btn" data-emo=":D">😃</button>
+                        <button class="emo-btn" data-emo=";)">😉</button>
+                        <button class="emo-btn" data-emo=":(">😢</button>
+                        <button class="emo-btn" data-emo=":P">😛</button>
+                        <button class="emo-btn" data-emo="(L)">❤️</button>
+                        <button class="emo-btn" data-emo=":O">😮</button>
+                        <button class="emo-btn" data-emo="(Y)">👍</button>
+                        <button class="emo-btn" data-emo=":$">😳</button>
+                        <button class="emo-btn" data-emo="(A)">😇</button>
+                        <button class="emo-btn" data-emo="(6)">😈</button>
+                        <button class="emo-btn" data-emo="(*)">⭐</button>
+                        <button class="emo-btn" data-emo="(#)">☀️</button>
+                        <button class="emo-btn" data-emo="(8)">🎵</button>
+                        <button class="emo-btn" data-emo="(C)">☕</button>
+                        <button class="emo-btn" data-emo=":'(">😂</button>
+                    </div>
                 </div>
 
                 <!-- Caja de texto para escribir -->
@@ -212,26 +212,26 @@
         });
 
         function parsearEmoticones(texto) {
-    return texto
-        .replace(/:\)/g, '😊')
-        .replace(/:D/g, '😃')
-        .replace(/;\)/g, '😉')
-        .replace(/:\(/g, '😢')
-        .replace(/:P/g, '😛')
-        .replace(/\(L\)/gi, '❤️')
-        .replace(/:O/g, '😮')
-        .replace(/\(Y\)/gi, '👍')
-        .replace(/:\$/g, '😳')
-        .replace(/\(A\)/gi, '😇')
-        .replace(/\(6\)/g, '😈')
-        .replace(/\(\*\)/g, '⭐')
-        .replace(/\(#\)/g, '☀️')
-        .replace(/\(8\)/g, '🎵')
-        .replace(/\(C\)/gi, '☕')
-        .replace(/:'\(/g, '😂');
-}
+            return texto
+                .replace(/:\)/g, '😊')
+                .replace(/:D/g, '😃')
+                .replace(/;\)/g, '😉')
+                .replace(/:\(/g, '😢')
+                .replace(/:P/g, '😛')
+                .replace(/\(L\)/gi, '❤️')
+                .replace(/:O/g, '😮')
+                .replace(/\(Y\)/gi, '👍')
+                .replace(/:\$/g, '😳')
+                .replace(/\(A\)/gi, '😇')
+                .replace(/\(6\)/g, '😈')
+                .replace(/\(\*\)/g, '⭐')
+                .replace(/\(#\)/g, '☀️')
+                .replace(/\(8\)/g, '🎵')
+                .replace(/\(C\)/gi, '☕')
+                .replace(/:'\(/g, '😂');
+        }
 
-        function iniciarSesion()  {
+        function iniciarSesion() {
             const texto = nombreInput.value.trim();
             if(!texto) {
                 alert("¡Ponete un nombre che!");
@@ -243,6 +243,11 @@
 
             loginScreen.classList.add('hidden');
             msnWindow.classList.remove('hidden');
+
+            // Pedir permisos para notificaciones de escritorio estilo WhatsApp
+            if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
         }
 
         loginBtn.addEventListener('click', iniciarSesion);
@@ -288,13 +293,14 @@
             }
         });
 
-        // Notificaciones emergentes (Toast)
+        // Notificaciones emergentes internas (Toast) y de Escritorio (WhatsApp style)
         const msnToast = document.getElementById('msnToast');
         const toastUser = document.getElementById('toastUser');
         const toastMessage = document.getElementById('toastMessage');
         let toastTimeout;
 
         function mostrarNotificacion(usuario, texto) {
+            // 1. Toast interno dentro de la app
             toastUser.textContent = usuario;
             toastMessage.textContent = texto;
             
@@ -304,9 +310,22 @@
             toastTimeout = setTimeout(() => {
                 msnToast.classList.add('hidden');
             }, 4000);
+
+            // 2. Notificación flotante de escritorio estilo WhatsApp (si la pestaña no está activa)
+            if ("Notification" in window && Notification.permission === "granted" && document.hidden) {
+                const notif = new Notification(`Nuevo mensaje de ${usuario}`, {
+                    body: texto,
+                    icon: 'https://img.icons8.com/color/48/msn-messenger.png' // Icono representativo
+                });
+
+                notif.onclick = function() {
+                    window.focus();
+                    this.close();
+                };
+            }
         }
 
-        // Recibir mensajes (Unificado con la ventana emergente)
+        // Recibir mensajes
         socket.on('chat_message', (data) => {
             const div = document.createElement('div');
             const esMio = data.usuario === miNombre;
@@ -319,13 +338,13 @@
             chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Si el mensaje es de otra persona, mostramos el cartelito
+            // Si el mensaje es de otra persona, disparamos las alertas
             if (!esMio) {
                 mostrarNotificacion(data.usuario, data.texto);
             }
         });
 
-        // Gestión unificada de Perfil (PC y Celular sincronizados)
+        // Gestión unificada de Perfil
         const statusSelect = document.getElementById('statusSelect');
         const personalMsgInput = document.getElementById('personalMsgInput');
         const statusSelectMobile = document.getElementById('statusSelectMobile');
