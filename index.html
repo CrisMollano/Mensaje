@@ -1,3 +1,7 @@
+Acá tenés los dos archivos (index.html y style.css) con todo actualizado: la barra limpia, el selector de colores, las notificaciones y los bordes gruesos con relieve clásico que cambian de color dinámicamente al ritmo del tema que elijas.
+
+1. Archivo index.html completo
+HTML
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,7 +28,7 @@
 
     <!-- Ventana Principal del Chat (Oculta hasta iniciar sesión) -->
     <div class="msn-window hidden" id="msnWindow">
-        <!-- Barra de título clásica (Limpia y sin botones inútiles) -->
+        <!-- Barra de título clásica -->
         <div class="msn-title-bar">
             <div class="title-left">
                 <span class="msn-icon">🟢</span>
@@ -464,6 +468,12 @@
             if (sendBtn) {
                 sendBtn.style.backgroundColor = colorHex;
             }
+
+            // Aplicar color dinámico a los bordes gruesos estilo MSN Plus
+            document.querySelectorAll('.contact-panel').forEach(el => el.style.borderRightColor = colorHex);
+            document.querySelectorAll('.chat-header').forEach(el => el.style.borderBottomColor = colorHex);
+            document.querySelectorAll('.chat-toolbar').forEach(el => el.style.borderTopColor = colorHex);
+            document.querySelectorAll('.chat-input-area').forEach(el => el.style.borderTopColor = colorHex);
         }
     </script>
 </body>

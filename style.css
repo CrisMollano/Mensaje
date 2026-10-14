@@ -109,28 +109,6 @@ body {
     font-size: 14px;
 }
 
-.title-buttons {
-    display: flex;
-    gap: 3px;
-}
-
-.win-btn {
-    background: #ece9d8;
-    border: 1px solid #fff;
-    color: #000;
-    width: 20px;
-    height: 20px;
-    font-size: 11px;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
-.win-btn.close {
-    background: #e81123;
-    color: white;
-    border-color: #a80000;
-}
-
 /* Cuerpo */
 .msn-body {
     display: flex;
@@ -138,11 +116,11 @@ body {
     overflow: hidden;
 }
 
-/* Panel izquierdo (Contactos) */
+/* Panel izquierdo (Contactos) - Con borde grueso dinámico */
 .contact-panel {
     width: 240px;
     background: #f9f8f5;
-    border-right: 1px solid #d4d0c8;
+    border-right: 3px solid #0055ea;
     display: flex;
     flex-direction: column;
 }
@@ -252,7 +230,7 @@ body {
     align-items: center;
     padding: 10px;
     background: #f4f3ec;
-    border-bottom: 1px solid #d4d0c8;
+    border-bottom: 3px solid #0055ea;
     gap: 10px;
 }
 
@@ -308,7 +286,7 @@ body {
 .chat-toolbar {
     padding: 5px 10px;
     background: #f4f3ec;
-    border-top: 1px solid #d4d0c8;
+    border-top: 3px solid #0055ea;
     display: flex;
     gap: 5px;
     position: relative;
@@ -344,7 +322,7 @@ body {
     box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     padding: 8px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+    grid-template-columns: repeat(4, 1fr);
     gap: 5px;
     z-index: 100;
     max-width: 180px;
@@ -373,7 +351,7 @@ body {
     display: flex;
     padding: 8px;
     background: #f4f3ec;
-    border-top: 1px solid #d4d0c8;
+    border-top: 2px solid #0055ea;
     gap: 8px;
     height: 70px;
 }
@@ -405,7 +383,7 @@ body {
     display: none;
 }
 
-/* RESPONSIVO PARA CELULARES (Pantalla completa real) */
+/* RESPONSIVO PARA CELULARES */
 @media (max-width: 768px) {
     body {
         height: 100vh;
@@ -422,12 +400,10 @@ body {
         border-radius: 0;
     }
 
-    /* Ocultamos el panel de contactos en celulares para que el chat ocupe toda la pantalla */
     .contact-panel {
         display: none;
     }
 
-    /* Mostrar barra móvil adaptada en celulares */
     .mobile-profile-bar {
         display: flex;
         flex-direction: column;
@@ -450,7 +426,7 @@ body {
     }
 }
 
-/* Animación del zumbido temblando */
+/* Animación del zumbido */
 @keyframes shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }
     10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -468,6 +444,7 @@ body {
 .shake {
     animation: shake 0.4s;
 }
+
 /* Notificación emergente (Pop-up estilo MSN) */
 .msn-toast {
     position: fixed;
