@@ -438,7 +438,7 @@
             });
         }
 
-        // Lógica para cambiar el color de la ventana estilo MSN Plus con relieve 3D
+        // Lógica para cambiar el color de la ventana estilo MSN Plus con relieve 3D grueso (8px)
         const colorPicker = document.getElementById('windowColorPicker');
         const msnTitleBar = document.querySelector('.msn-title-bar');
 
@@ -465,18 +465,18 @@
                 sendBtn.style.backgroundColor = colorHex;
             }
 
-            // Aplicar el color elegido a los bordes con relieve clásico
+            // Aplicar bordes bien gruesos de 8px con relieve 3D
             document.querySelectorAll('.contact-panel').forEach(el => {
-                el.style.borderRightColor = colorHex;
+                el.style.borderRight = `8px ridge ${colorHex}`;
             });
             document.querySelectorAll('.chat-header').forEach(el => {
-                el.style.borderBottomColor = colorHex;
+                el.style.borderBottom = `8px ridge ${colorHex}`;
             });
             document.querySelectorAll('.chat-toolbar').forEach(el => {
-                el.style.borderTopColor = colorHex;
+                el.style.borderTop = `8px ridge ${colorHex}`;
             });
             document.querySelectorAll('.chat-input-area').forEach(el => {
-                el.style.borderTopColor = colorHex;
+                el.style.borderTop = `8px ridge ${colorHex}`;
             });
         }
     </script>

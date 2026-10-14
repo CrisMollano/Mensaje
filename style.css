@@ -1,3 +1,6 @@
+Acá tenés el archivo style.css completo y modificado con los bordes de 8px con efecto relieve ridge para que queden bien gruesos y con ese cuerpo clásico de Windows XP y el viejo MSN:
+
+CSS
 * {
     box-sizing: border-box;
     margin: 0;
@@ -116,13 +119,11 @@ body {
     overflow: hidden;
 }
 
-/* Panel izquierdo (Contactos) - Con relieve 3D clásico tipo Windows */
+/* Panel izquierdo (Contactos) - Borde grueso 3D de 8px */
 .contact-panel {
     width: 240px;
     background: #f9f8f5;
-    /* Efecto relieve 3D clásico: borde derecho oscuro y sombra interior */
-    border-right: 3px solid #808080;
-    box-shadow: inset -2px 0 0 #ffffff;
+    border-right: 8px ridge #0055ea;
     display: flex;
     flex-direction: column;
 }
@@ -132,7 +133,7 @@ body {
     align-items: center;
     padding: 10px;
     background: #fff;
-    border-bottom: 2px solid #dfdcd0;
+    border-bottom: 2px groove #e0e0e0;
     gap: 10px;
 }
 
@@ -201,7 +202,7 @@ body {
 .personal-substatus-box {
     padding: 6px 10px;
     background: #fff;
-    border-bottom: 2px solid #dfdcd0;
+    border-bottom: 2px groove #e0e0e0;
 }
 
 .personal-substatus-box input {
@@ -233,9 +234,7 @@ body {
     align-items: center;
     padding: 10px;
     background: #f4f3ec;
-    /* Relieve inferior clásico de Windows */
-    border-bottom: 3px solid #808080;
-    box-shadow: inset 0 -2px 0 #ffffff;
+    border-bottom: 8px ridge #0055ea;
     gap: 10px;
 }
 
@@ -287,12 +286,11 @@ body {
     padding-left: 5px;
 }
 
-/* Barra de herramientas con relieve clásico */
+/* Barra de herramientas con relieve 3D grueso de 8px */
 .chat-toolbar {
     padding: 5px 10px;
     background: #f4f3ec;
-    border-top: 3px solid #dfdcd0;
-    box-shadow: inset 0 2px 0 #ffffff;
+    border-top: 8px ridge #0055ea;
     display: flex;
     gap: 5px;
     position: relative;
@@ -352,15 +350,14 @@ body {
     border-color: #f39c12;
 }
 
-/* Área de input con efecto hundido clásico (sunken) */
+/* Área de input con borde grueso de 8px y efecto hundido */
 .chat-input-area {
     display: flex;
     padding: 8px;
     background: #f4f3ec;
-    border-top: 3px solid #808080;
-    box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
+    border-top: 8px ridge #0055ea;
     gap: 8px;
-    height: 70px;
+    height: 80px;
 }
 
 .chat-input-area textarea {
@@ -370,7 +367,6 @@ body {
     padding: 5px;
     font-size: 12px;
     border-radius: 2px;
-    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 .send-btn {
@@ -471,7 +467,7 @@ body {
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.msn.toast.hidden {
+.msn-toast.hidden {
     display: none !important;
 }
 
