@@ -158,12 +158,37 @@
         const chatMessages = document.getElementById('chatMessages');
 
         let miNombre = "";
+        let tituloOriginal = document.title;
+        let intervaloParpadeo = null;
 
-        // Función para reproducir el zumbido con el sintetizador interno del navegador
+        // Reproducir el sonido clásico del MSN ("¡Plin!")
+        function reproducirSonidoMensaje() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); 
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.08); 
+
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } catch (e) {
+                console.log("Error al reproducir audio:", e);
+            }
+        }
+
+        // Función para reproducir el zumbido
         function reproducirSonidoZumbido() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 
@@ -181,9 +206,27 @@
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.4);
             } catch (e) {
-                console.log("Error al reproducir audio WebAPI:", e);
+                console.log("Error al reproducir audio:", e);
             }
         }
+
+        // Hacer parpadear la pestaña si estás en otra cosa
+        function iniciarParpadeoTitulo(nuevoTexto) {
+            if (intervaloParpadeo) return;
+            let alternar = false;
+            intervaloParpadeo = setInterval(() => {
+                document.title = alternar ? nuevoTexto : tituloOriginal;
+                alternar = !alternar;
+            }, 1000);
+        }
+
+        window.addEventListener('focus', () => {
+            if (intervaloParpadeo) {
+                clearInterval(intervaloParpadeo);
+                intervaloParpadeo = null;
+            }
+            document.title = tituloOriginal;
+        });
 
         // Lógica del menú de Emoticones
         const btnEmoticons = document.getElementById('btnEmoticons');
@@ -243,11 +286,6 @@
 
             loginScreen.classList.add('hidden');
             msnWindow.classList.remove('hidden');
-
-            // Pedir permisos para notificaciones de escritorio estilo WhatsApp
-            if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
-                Notification.requestPermission();
-            }
         }
 
         loginBtn.addEventListener('click', iniciarSesion);
@@ -271,6 +309,10 @@
             chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
+            if (document.hidden) {
+                iniciarParpadeoTitulo(`⚡ ¡Zumbido de ${usuarioQueManda}!`);
+            }
+
             setTimeout(() => {
                 windowBox.classList.remove('shake');
             }, 500);
@@ -293,14 +335,13 @@
             }
         });
 
-        // Notificaciones emergentes internas (Toast) y de Escritorio (WhatsApp style)
+        // Notificaciones internas (Toast estilizado)
         const msnToast = document.getElementById('msnToast');
         const toastUser = document.getElementById('toastUser');
         const toastMessage = document.getElementById('toastMessage');
         let toastTimeout;
 
-        function mostrarNotificacion(usuario, texto) {
-            // 1. Toast interno dentro de la app
+        function mostrarNotificacionInterna(usuario, texto) {
             toastUser.textContent = usuario;
             toastMessage.textContent = texto;
             
@@ -310,19 +351,6 @@
             toastTimeout = setTimeout(() => {
                 msnToast.classList.add('hidden');
             }, 4000);
-
-            // 2. Notificación flotante de escritorio estilo WhatsApp (si la pestaña no está activa)
-            if ("Notification" in window && Notification.permission === "granted" && document.hidden) {
-                const notif = new Notification(`Nuevo mensaje de ${usuario}`, {
-                    body: texto,
-                    icon: 'https://img.icons8.com/color/48/msn-messenger.png' // Icono representativo
-                });
-
-                notif.onclick = function() {
-                    window.focus();
-                    this.close();
-                };
-            }
         }
 
         // Recibir mensajes
@@ -338,9 +366,14 @@
             chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Si el mensaje es de otra persona, disparamos las alertas
+            // Si el mensaje es de otra persona, disparamos sonido y avisos limpios
             if (!esMio) {
-                mostrarNotificacion(data.usuario, data.texto);
+                reproducirSonidoMensaje();
+                mostrarNotificacionInterna(data.usuario, data.texto);
+
+                if (document.hidden) {
+                    iniciarParpadeoTitulo(`💬 Mensaje de ${data.usuario}`);
+                }
             }
         });
 
