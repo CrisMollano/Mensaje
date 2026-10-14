@@ -33,7 +33,7 @@
         </div>
 
         <!-- Selector de color de ventana estilo MSN Plus -->
-        <div class="theme-picker" style="padding: 6px 10px; background: #ece9d8; border-bottom: 2px groove #fff; display: flex; align-items: center; gap: 8px; font-size: 12px;">
+        <div class="theme-picker">
             <span>Color de tema:</span>
             <input type="color" id="windowColorPicker" value="#0055ea" style="cursor: pointer; border: 1px solid #7f9db9; background: white; width: 30px; height: 20px;">
         </div>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <!-- Barra de perfil para celulares (solo se ve en pantallas chicas) -->
+        <!-- Barra de perfil para celulares -->
         <div class="mobile-profile-bar">
             <div class="mobile-status-container">
                 <select id="statusSelectMobile" class="status-select">
@@ -70,7 +70,6 @@
                     <div class="avatar-box">👨‍💻</div>
                     <div class="user-info">
                         <strong id="myDisplayName">Tu Nombre</strong>
-                        <!-- Selector de Estado -->
                         <select id="statusSelect" class="status-select">
                             <option value="online">🟢 En línea</option>
                             <option value="busy">🔴 Ocupado</option>
@@ -78,7 +77,6 @@
                         </select>
                     </div>
                 </div>
-                <!-- Sub-estado / Frase personal editable -->
                 <div class="personal-substatus-box">
                     <input type="text" id="personalMsgInput" placeholder="Haz clic aquí para cambiar tu frase personal..." maxlength="60">
                 </div>
@@ -110,7 +108,6 @@
                     <button class="tool-btn" id="btnEmoticons" title="Emoticones">😊 Emoticons</button>
                     <button class="tool-btn" id="btnZumbido" title="¡Mandar un zumbido!">⚡ Zumbido!</button>
                 
-                    <!-- Menú desplegable de emoticones ampliado -->
                     <div class="emoticon-menu hidden" id="emoticonMenu">
                         <button class="emo-btn" data-emo=":)">😊</button>
                         <button class="emo-btn" data-emo=":D">😃</button>
@@ -162,14 +159,12 @@
         let tituloOriginal = document.title;
         let intervaloParpadeo = null;
 
-        // Pedir permiso para notificaciones flotantes en el escritorio
         function solicitarPermisoNotificaciones() {
             if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
                 Notification.requestPermission();
             }
         }
 
-        // Mostrar notificación flotante real en el escritorio de la PC
         function dispararNotificacionEscritorio(usuario, texto) {
             if ("Notification" in window && Notification.permission === "granted" && document.hidden) {
                 const notif = new Notification(`MSN: Mensaje de ${usuario}`, {
@@ -184,7 +179,6 @@
             }
         }
 
-        // Reproducir el sonido clásico del MSN ("¡Plin!")
         function reproducirSonidoMensaje() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -208,7 +202,6 @@
             }
         }
 
-        // Función para reproducir el zumbido
         function reproducirSonidoZumbido() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -233,7 +226,6 @@
             }
         }
 
-        // Hacer parpadear la pestaña si estás en otra cosa
         function iniciarParpadeoTitulo(nuevoTexto) {
             if (intervaloParpadeo) return;
             let alternar = false;
@@ -318,12 +310,10 @@
             if(e.key === 'Enter') iniciarSesion();
         });
 
-        // Botón Zumbido
         btnZumbido.addEventListener('click', () => {
             socket.emit('enviar_zumbido', miNombre);
         });
 
-        // Recibir zumbido
         socket.on('recibir_zumbido', (usuarioQueManda) => {
             windowBox.classList.add('shake');
             reproducirSonidoZumbido();
@@ -344,7 +334,6 @@
             }, 500);
         });
 
-        // Enviar mensaje
         function enviarMensaje() {
             const texto = messageInput.value.trim();
             if(!texto) return;
@@ -361,7 +350,6 @@
             }
         });
 
-        // Notificaciones internas (Toast estilizado)
         const msnToast = document.getElementById('msnToast');
         const toastUser = document.getElementById('toastUser');
         const toastMessage = document.getElementById('toastMessage');
@@ -379,7 +367,6 @@
             }, 4000);
         }
 
-        // Recibir mensajes
         socket.on('chat_message', (data) => {
             const div = document.createElement('div');
             const esMio = data.usuario === miNombre;
@@ -403,7 +390,6 @@
             }
         });
 
-        // Gestión unificada de Perfil
         const statusSelect = document.getElementById('statusSelect');
         const personalMsgInput = document.getElementById('personalMsgInput');
         const statusSelectMobile = document.getElementById('statusSelectMobile');
@@ -438,7 +424,7 @@
             });
         }
 
-        // Lógica para cambiar el color de la ventana estilo MSN Plus con relieve 3D grueso (8px)
+        // Lógica para cambiar el color de tema (cambia fondo general y barra de título)
         const colorPicker = document.getElementById('windowColorPicker');
         const msnTitleBar = document.querySelector('.msn-title-bar');
 
@@ -464,20 +450,6 @@
             if (sendBtn) {
                 sendBtn.style.backgroundColor = colorHex;
             }
-
-            // Aplicar bordes bien gruesos de 8px con relieve 3D
-            document.querySelectorAll('.contact-panel').forEach(el => {
-                el.style.borderRight = `8px ridge ${colorHex}`;
-            });
-            document.querySelectorAll('.chat-header').forEach(el => {
-                el.style.borderBottom = `8px ridge ${colorHex}`;
-            });
-            document.querySelectorAll('.chat-toolbar').forEach(el => {
-                el.style.borderTop = `8px ridge ${colorHex}`;
-            });
-            document.querySelectorAll('.chat-input-area').forEach(el => {
-                el.style.borderTop = `8px ridge ${colorHex}`;
-            });
         }
     </script>
 </body>

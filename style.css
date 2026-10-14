@@ -1,6 +1,3 @@
-Acá tenés el archivo style.css completo y modificado con los bordes de 8px con efecto relieve ridge para que queden bien gruesos y con ese cuerpo clásico de Windows XP y el viejo MSN:
-
-CSS
 * {
     box-sizing: border-box;
     margin: 0;
@@ -78,7 +75,7 @@ body {
     display: none !important;
 }
 
-/* Ventana principal adaptable a pantalla completa */
+/* Ventana principal adaptable */
 .msn-window {
     width: 100vw;
     height: 100vh;
@@ -86,8 +83,7 @@ body {
     max-width: 100%;
     max-height: 100%;
     border: none;
-    border-radius: 0;
-    background: #ece9d8;
+    background: #ece9d8; /* Color de fondo general de la ventana */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -102,6 +98,7 @@ body {
     justify-content: space-between;
     align-items: center;
     cursor: default;
+    flex-shrink: 0;
 }
 
 .title-left {
@@ -112,28 +109,48 @@ body {
     font-size: 14px;
 }
 
-/* Cuerpo */
+/* Selector de tema */
+.theme-picker {
+    padding: 4px 10px;
+    background: #ece9d8;
+    border-bottom: 2px solid #808080;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+/* Cuerpo con márgenes para simular separaciones del MSN real */
 .msn-body {
     display: flex;
     flex: 1;
     overflow: hidden;
+    padding: 6px;
+    gap: 6px;
+    background: #ece9d8;
 }
 
-/* Panel izquierdo (Contactos) - Borde grueso 3D de 8px */
+/* PANEL IZQUIERDO (Contactos) - Marco 3D hundido */
 .contact-panel {
     width: 240px;
     background: #f9f8f5;
-    border-right: 8px ridge #0055ea;
+    /* Biselado 3D hundido clásico Windows XP */
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .user-profile {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 8px;
     background: #fff;
-    border-bottom: 2px groove #e0e0e0;
+    border-bottom: 1px solid #d4d0c8;
     gap: 10px;
 }
 
@@ -141,7 +158,8 @@ body {
     font-size: 28px;
     background: #e0e0e0;
     padding: 5px;
-    border-radius: 5px;
+    border: 1px solid #7f9db9;
+    border-radius: 3px;
 }
 
 .user-info strong {
@@ -149,30 +167,27 @@ body {
     color: #333;
 }
 
-.user-info small {
-    display: block;
-    color: #666;
-    font-size: 11px;
-}
-
 .contact-list-title {
-    padding: 8px 10px;
-    font-size: 12px;
+    padding: 6px 8px;
+    font-size: 11px;
     font-weight: bold;
     color: #444;
     background: #e9e5dc;
+    border-top: 1px solid #ffffff;
     border-bottom: 1px solid #d4d0c8;
 }
 
 .contact-list {
     list-style: none;
     padding: 5px;
+    overflow-y: auto;
+    flex: 1;
 }
 
 .contact-list li {
-    padding: 6px;
-    font-size: 13px;
-    border-radius: 4px;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 3px;
     cursor: pointer;
 }
 
@@ -180,15 +195,6 @@ body {
     background: #d8e5f8;
 }
 
-.sub-status {
-    display: block;
-    color: #888;
-    font-size: 11px;
-    font-style: italic;
-    margin-left: 18px;
-}
-
-/* Selector de Estado y Frase Personal */
 .status-select {
     background: transparent;
     border: none;
@@ -196,13 +202,12 @@ body {
     color: #444;
     cursor: pointer;
     outline: none;
-    margin-top: 2px;
 }
 
 .personal-substatus-box {
-    padding: 6px 10px;
+    padding: 4px 8px;
     background: #fff;
-    border-bottom: 2px groove #e0e0e0;
+    border-bottom: 1px solid #d4d0c8;
 }
 
 .personal-substatus-box input {
@@ -221,29 +226,35 @@ body {
     background: #fff;
 }
 
-/* Panel de Chat */
+/* PANEL DERECHO (Área de Chat) */
 .chat-panel {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: #fff;
+    gap: 6px;
+    overflow: hidden;
 }
 
+/* Cabecera del chat marco hundido */
 .chat-header {
     display: flex;
     align-items: center;
-    padding: 10px;
-    background: #f4f3ec;
-    border-bottom: 8px ridge #0055ea;
+    padding: 8px;
+    background: #fff;
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
     gap: 10px;
+    flex-shrink: 0;
 }
 
 .chat-avatar {
-    font-size: 32px;
+    font-size: 28px;
 }
 
 .chat-header strong {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .personal-msg {
@@ -252,15 +263,19 @@ body {
     font-style: italic;
 }
 
-/* Mensajes */
+/* Historial de Mensajes con marco biselado e interior blanco */
 .chat-messages {
     flex: 1;
-    padding: 10px;
+    padding: 8px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 8px;
     background: #fff;
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
 }
 
 .msg {
@@ -286,19 +301,19 @@ body {
     padding-left: 5px;
 }
 
-/* Barra de herramientas con relieve 3D grueso de 8px */
+/* Barra de herramientas */
 .chat-toolbar {
-    padding: 5px 10px;
-    background: #f4f3ec;
-    border-top: 8px ridge #0055ea;
+    padding: 4px;
+    background: #ece9d8;
     display: flex;
     gap: 5px;
     position: relative;
+    flex-shrink: 0;
 }
 
 .tool-btn {
-    background: #ece9d8;
-    border: 1px solid #adaa9f;
+    background: linear-gradient(to bottom, #f3f2e8 0%, #dcd9cb 100%);
+    border: 1px solid #7f9db9;
     padding: 3px 8px;
     font-size: 11px;
     cursor: pointer;
@@ -322,7 +337,7 @@ body {
     bottom: 35px;
     left: 10px;
     background: #ece9d8;
-    border: 1px solid #716f64;
+    border: 2px solid #808080;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     padding: 8px;
     display: grid;
@@ -350,29 +365,32 @@ body {
     border-color: #f39c12;
 }
 
-/* Área de input con borde grueso de 8px y efecto hundido */
+/* Área de Input del Chat */
 .chat-input-area {
     display: flex;
-    padding: 8px;
-    background: #f4f3ec;
-    border-top: 8px ridge #0055ea;
-    gap: 8px;
-    height: 80px;
+    padding: 6px;
+    background: #ece9d8;
+    gap: 6px;
+    height: 75px;
+    flex-shrink: 0;
 }
 
 .chat-input-area textarea {
     flex: 1;
     resize: none;
-    border: 1px solid #adaa9f;
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
     padding: 5px;
     font-size: 12px;
-    border-radius: 2px;
+    outline: none;
 }
 
 .send-btn {
-    width: 70px;
+    width: 75px;
     background: linear-gradient(to bottom, #f3f2e8 0%, #dcd9cb 100%);
-    border: 1px solid #adaa9f;
+    border: 1px solid #7f9db9;
     font-weight: bold;
     cursor: pointer;
     border-radius: 3px;
@@ -382,7 +400,6 @@ body {
     background: linear-gradient(to bottom, #e4e2d4 0%, #cbc7b6 100%);
 }
 
-/* Ocultar barra móvil en la PC por defecto */
 .mobile-profile-bar {
     display: none;
 }
@@ -398,10 +415,6 @@ body {
         width: 100vw;
         height: 100vh;
         height: 100dvh;
-        max-width: 100%;
-        max-height: 100%;
-        border: none;
-        border-radius: 0;
     }
 
     .contact-panel {
@@ -413,20 +426,8 @@ body {
         flex-direction: column;
         background: #f1efe2;
         padding: 5px 10px;
-        border-bottom: 2px groove #d2d0c1;
+        border-bottom: 1px solid #d2d0c1;
         gap: 3px;
-    }
-    
-    .mobile-substatus-container input {
-        width: 100%;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        padding: 2px 5px;
-        font-size: 11px;
-        font-style: italic;
-        background: #fff;
-        color: #555;
-        outline: none;
     }
 }
 
@@ -449,13 +450,13 @@ body {
     animation: shake 0.4s;
 }
 
-/* Notificación emergente (Pop-up estilo MSN) */
+/* Notificación emergente */
 .msn-toast {
     position: fixed;
     bottom: 20px;
     right: 20px;
     width: 250px;
-    background: linear-gradient(to bottom, #fdfbf7 0%, #eb3922e3 0%, #ece9d8 100%);
+    background: linear-gradient(to bottom, #fdfbf7 0%, #ece9d8 100%);
     border: 2px solid #0055ea;
     border-radius: 6px 6px 0 0;
     box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
@@ -464,7 +465,6 @@ body {
     padding: 10px;
     gap: 10px;
     z-index: 10000;
-    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .msn-toast.hidden {
