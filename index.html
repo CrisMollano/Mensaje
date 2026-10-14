@@ -161,6 +161,28 @@
         let tituloOriginal = document.title;
         let intervaloParpadeo = null;
 
+        // Pedir permiso para notificaciones flotantes en el escritorio
+        function solicitarPermisoNotificaciones() {
+            if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
+        }
+
+        // Mostrar notificación flotante real en el escritorio de la PC
+        function dispararNotificacionEscritorio(usuario, texto) {
+            if ("Notification" in window && Notification.permission === "granted" && document.hidden) {
+                const notif = new Notification(`MSN: Mensaje de ${usuario}`, {
+                    body: texto,
+                    icon: 'https://img.icons8.com/color/48/msn-messenger.png'
+                });
+
+                notif.onclick = function() {
+                    window.focus();
+                    this.close();
+                };
+            }
+        }
+
         // Reproducir el sonido clásico del MSN ("¡Plin!")
         function reproducirSonidoMensaje() {
             try {
@@ -286,6 +308,8 @@
 
             loginScreen.classList.add('hidden');
             msnWindow.classList.remove('hidden');
+
+            solicitarPermisoNotificaciones();
         }
 
         loginBtn.addEventListener('click', iniciarSesion);
@@ -311,6 +335,7 @@
 
             if (document.hidden) {
                 iniciarParpadeoTitulo(`⚡ ¡Zumbido de ${usuarioQueManda}!`);
+                dispararNotificacionEscritorio(usuarioQueManda || "Alguien", "⚡ ¡Te envió un zumbido!");
             }
 
             setTimeout(() => {
@@ -366,13 +391,13 @@
             chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Si el mensaje es de otra persona, disparamos sonido y avisos limpios
             if (!esMio) {
                 reproducirSonidoMensaje();
                 mostrarNotificacionInterna(data.usuario, data.texto);
 
                 if (document.hidden) {
                     iniciarParpadeoTitulo(`💬 Mensaje de ${data.usuario}`);
+                    dispararNotificacionEscritorio(data.usuario, data.texto);
                 }
             }
         });
