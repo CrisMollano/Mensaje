@@ -75,7 +75,7 @@ body {
     display: none !important;
 }
 
-/* Ventana principal adaptable */
+/* Ventana principal */
 .msn-window {
     width: 100vw;
     height: 100vh;
@@ -83,13 +83,13 @@ body {
     max-width: 100%;
     max-height: 100%;
     border: none;
-    background: #ece9d8; /* Color de fondo general de la ventana */
+    background: #8ba278; /* Color por defecto pastel tipo MSN */
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 
-/* Barra de título azul clásica */
+/* Barra de título azul */
 .msn-title-bar {
     background: linear-gradient(to bottom, #0055ea 0%, #003092 100%);
     color: white;
@@ -109,40 +109,78 @@ body {
     font-size: 14px;
 }
 
-/* Selector de tema */
+/* Selector de color */
 .theme-picker {
-    padding: 4px 10px;
-    background: transparent; /* Permite ver el color de fondo elegido */
-    border-bottom: 2px solid rgba(0,0,0,0.15);
+    padding: 4px 12px;
+    background: #8ba278;
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 12px;
     flex-shrink: 0;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
 }
 
-/* Cuerpo con márgenes para simular separaciones del MSN real */
+/* Cuerpo principal con los márgenes gruesos del color del tema */
 .msn-body {
     display: flex;
     flex: 1;
     overflow: hidden;
-    padding: 6px;
-    gap: 6px;
-    background: #ece9d8;
+    padding: 0 10px 10px 10px;
+    gap: 10px;
+    background: #8ba278;
 }
 
-/* PANEL IZQUIERDO (Contactos) - Marco 3D hundido */
-.contact-panel {
-    width: 240px;
-    background: #f9f8f5;
-    /* Biselado 3D hundido clásico Windows XP */
-    border-top: 2px solid #808080;
-    border-left: 2px solid #808080;
-    border-right: 2px solid #ffffff;
-    border-bottom: 2px solid #ffffff;
+/* MARCOS CONTENEDORES (Crean la cinta gruesa de color alrededor de cada caja) */
+.contact-panel-frame,
+.chat-header-frame,
+.chat-messages-frame,
+.chat-input-frame {
+    background: #8ba278;
+    padding: 6px; /* Grosor del marco de color */
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
+}
+
+.contact-panel-frame {
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.chat-header-frame {
+    flex-shrink: 0;
+}
+
+.chat-messages-frame {
+    flex: 1;
+}
+
+.chat-input-frame {
+    flex-shrink: 0;
+    height: 80px;
+}
+
+/* CAJAS INTERIORES CON BORDE HUNDIDO 3D REAL (Windows XP) */
+.contact-panel,
+.chat-header,
+.chat-messages,
+.chat-input-area {
+    background: #ffffff;
+    border-top: 2px solid #716f64;
+    border-left: 2px solid #716f64;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    border-radius: 4px;
     overflow: hidden;
+    flex: 1;
+    display: flex;
+}
+
+.contact-panel {
+    flex-direction: column;
+    background: #fdfdfd;
 }
 
 .user-profile {
@@ -150,15 +188,15 @@ body {
     align-items: center;
     padding: 8px;
     background: #fff;
-    border-bottom: 1px solid #d4d0c8;
+    border-bottom: 1px solid #e5e3d7;
     gap: 10px;
 }
 
 .avatar-box {
-    font-size: 28px;
-    background: #e0e0e0;
-    padding: 5px;
-    border: 1px solid #7f9db9;
+    font-size: 26px;
+    background: #f0f0f0;
+    padding: 4px;
+    border: 1px solid #adaa9f;
     border-radius: 3px;
 }
 
@@ -172,9 +210,8 @@ body {
     font-size: 11px;
     font-weight: bold;
     color: #444;
-    background: #e9e5dc;
-    border-top: 1px solid #ffffff;
-    border-bottom: 1px solid #d4d0c8;
+    background: #f0eee4;
+    border-bottom: 1px solid #e5e3d7;
 }
 
 .contact-list {
@@ -207,12 +244,12 @@ body {
 .personal-substatus-box {
     padding: 4px 8px;
     background: #fff;
-    border-bottom: 1px solid #d4d0c8;
+    border-bottom: 1px solid #e5e3d7;
 }
 
 .personal-substatus-box input {
     width: 100%;
-    border: 1px transparent;
+    border: none;
     font-size: 11px;
     font-style: italic;
     color: #666;
@@ -220,33 +257,19 @@ body {
     background: transparent;
 }
 
-.personal-substatus-box input:hover,
-.personal-substatus-box input:focus {
-    border: 1px solid #adaa9f;
-    background: #fff;
-}
-
-/* PANEL DERECHO (Área de Chat) */
+/* Panel derecho */
 .chat-panel {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0;
     overflow: hidden;
 }
 
-/* Cabecera del chat marco hundido */
 .chat-header {
-    display: flex;
     align-items: center;
     padding: 8px;
-    background: #fff;
-    border-top: 2px solid #808080;
-    border-left: 2px solid #808080;
-    border-right: 2px solid #ffffff;
-    border-bottom: 2px solid #ffffff;
     gap: 10px;
-    flex-shrink: 0;
 }
 
 .chat-avatar {
@@ -263,19 +286,11 @@ body {
     font-style: italic;
 }
 
-/* Historial de Mensajes con marco biselado e interior blanco */
 .chat-messages {
-    flex: 1;
     padding: 8px;
     overflow-y: auto;
-    display: flex;
     flex-direction: column;
     gap: 8px;
-    background: #fff;
-    border-top: 2px solid #808080;
-    border-left: 2px solid #808080;
-    border-right: 2px solid #ffffff;
-    border-bottom: 2px solid #ffffff;
 }
 
 .msg {
@@ -303,8 +318,8 @@ body {
 
 /* Barra de herramientas */
 .chat-toolbar {
-    padding: 4px;
-    background: #ece9d8;
+    padding: 4px 6px;
+    background: #8ba278;
     display: flex;
     gap: 5px;
     position: relative;
@@ -312,16 +327,16 @@ body {
 }
 
 .tool-btn {
-    background: linear-gradient(to bottom, #f3f2e8 0%, #dcd9cb 100%);
-    border: 1px solid #7f9db9;
+    background: linear-gradient(to bottom, #ffffff 0%, #ece9d8 100%);
+    border: 1px solid #716f64;
     padding: 3px 8px;
     font-size: 11px;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
 .tool-btn:hover {
-    background: #e1dbcc;
+    background: #ffffff;
 }
 
 #btnZumbido {
@@ -331,13 +346,13 @@ body {
     font-weight: bold;
 }
 
-/* Menú desplegable de emoticones */
+/* Menú de emoticones */
 .emoticon-menu {
     position: absolute;
     bottom: 35px;
     left: 10px;
     background: #ece9d8;
-    border: 2px solid #808080;
+    border: 2px solid #716f64;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     padding: 8px;
     display: grid;
@@ -365,59 +380,42 @@ body {
     border-color: #f39c12;
 }
 
-/* Área de Input del Chat */
+/* Área de input de texto */
 .chat-input-area {
-    display: flex;
-    padding: 6px;
-    background: #ece9d8;
+    padding: 4px;
     gap: 6px;
-    height: 75px;
-    flex-shrink: 0;
+    background: #ffffff;
 }
 
 .chat-input-area textarea {
     flex: 1;
     resize: none;
-    border-top: 2px solid #808080;
-    border-left: 2px solid #808080;
-    border-right: 2px solid #ffffff;
-    border-bottom: 2px solid #ffffff;
-    padding: 5px;
+    border: none;
+    padding: 4px;
     font-size: 12px;
     outline: none;
 }
 
 .send-btn {
-    width: 75px;
-    background: linear-gradient(to bottom, #f3f2e8 0%, #dcd9cb 100%);
-    border: 1px solid #7f9db9;
+    width: 70px;
+    background: linear-gradient(to bottom, #ffffff 0%, #ece9d8 100%);
+    border: 1px solid #716f64;
     font-weight: bold;
     cursor: pointer;
     border-radius: 3px;
 }
 
 .send-btn:hover {
-    background: linear-gradient(to bottom, #e4e2d4 0%, #cbc7b6 100%);
+    background: #ffffff;
 }
 
 .mobile-profile-bar {
     display: none;
 }
 
-/* RESPONSIVO PARA CELULARES */
+/* Celulares */
 @media (max-width: 768px) {
-    body {
-        height: 100vh;
-        height: 100dvh;
-    }
-
-    .msn-window {
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-    }
-
-    .contact-panel {
+    .contact-panel-frame {
         display: none;
     }
 
