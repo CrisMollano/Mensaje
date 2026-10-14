@@ -442,14 +442,34 @@
             });
         }
 
-        function aplicarColorTema(colorHex) {
+       function aplicarColorTema(colorHex) {
+            // Pintar la barra de título superior
             if (msnTitleBar) {
                 msnTitleBar.style.background = `linear-gradient(to right, ${colorHex}, #ffffff)`;
             }
+            // Pintar el botón de enviar
             const sendBtn = document.getElementById('sendBtn');
             if (sendBtn) {
                 sendBtn.style.backgroundColor = colorHex;
             }
+
+            // Pintar los bordes biselados 3D de los paneles
+            document.querySelectorAll('.contact-panel').forEach(el => {
+                el.style.borderTopColor = colorHex;
+                el.style.borderLeftColor = colorHex;
+            });
+            document.querySelectorAll('.chat-header').forEach(el => {
+                el.style.borderTopColor = colorHex;
+                el.style.borderLeftColor = colorHex;
+            });
+            document.querySelectorAll('.chat-messages').forEach(el => {
+                el.style.borderTopColor = colorHex;
+                el.style.borderLeftColor = colorHex;
+            });
+            document.querySelectorAll('.chat-input-area textarea').forEach(el => {
+                el.style.borderTopColor = colorHex;
+                el.style.borderLeftColor = colorHex;
+            });
         }
     </script>
 </body>
