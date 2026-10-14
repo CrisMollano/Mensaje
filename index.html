@@ -46,16 +46,21 @@
                     <div class="avatar-box">👨‍💻</div>
                     <div class="user-info">
                         <strong id="myDisplayName">Tu Nombre</strong>
-                        <small>En línea 🟢</small>
+                       <!-- Selector de Estado -->
+                        <select id="statusSelect" class="status-select">
+                            <option value="online">🟢 En línea</option>
+                            <option value="busy">🔴 Ocupado</option>
+                            <option value="away">🟡 Ausente</option>
+                        </select>
                     </div>
+                </div>
+                <!-- Sub-estado / Frase personal editable -->
+                <div class="personal-substatus-box">
+                    <input type="text" id="personalMsgInput" placeholder="Haz clic aquí para cambiar tu frase personal..." maxlength="60">
                 </div>
                 <div class="contact-list-title">Contactos conectados</div>
                 <ul class="contact-list" id="contactList">
-                    <li class="active-contact">
-                        <span class="status-dot">🟢</span> 
-                        <span>Sala General</span>
-                        <small class="sub-status">"El futuro ya llegó..."</small>
-                    </li>
+                    <!-- Se llena dinámicamente -->
                 </ul>
             </div>
 
@@ -260,6 +265,24 @@
             
             chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+        // Referencias a los nuevos elementos
+        const statusSelect = document.getElementById('statusSelect');
+        const personalMsgInput = document.getElementById('personalMsgInput');
+
+        // Enviar cambio de estado o frase personal al servidor
+        function actualizarMiPerfil() {
+            const estado = statusSelect.value;
+            const frase = personalMsgInput.value.trim();
+            socket.emit('actualizar_perfil', { estado, frase });
+        }
+
+        statusSelect.addEventListener('change', actualizarMiPerfil);
+        personalMsgInput.addEventListener('change', actualizarMiPerfil);
+        personalMsgInput.addEventListener('keydown', (e) => {
+            if(e.key === 'Enter') {
+                personalMsgInput.blur(); // Desenfocar al presionar Enter
+            }
         });
     </script>
 </body>

@@ -28,6 +28,16 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('Un usuario se desconectó.');
     });
+    // Adentro del io.on('connection', (socket) => { ... })
+
+socket.on('actualizar_perfil', (data) => {
+    // Retransmite el estado y la frase a todos los demás clientes
+    socket.broadcast.emit('perfil_actualizado', {
+        id: socket.id,
+        estado: data.estado,
+        frase: data.frase
+    });
+});
 });
 
 const PORT = process.env.PORT || 3000;
