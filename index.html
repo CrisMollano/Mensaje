@@ -452,20 +452,23 @@
         }
 
         function aplicarColorTema(colorHex) {
-            // Barra superior
+            // Barra superior con gradiente sutil
             if (msnTitleBar) {
-                msnTitleBar.style.background = `linear-gradient(to right, ${colorHex}, #ffffff)`;
+                msnTitleBar.style.background = `linear-gradient(to right, ${colorHex}, #003092)`;
             }
 
-            // Tiñe todos los marcos exteriores que rodean cada sección (estilo MSN)
-            document.querySelectorAll('.theme-picker, .msn-body, .contact-panel-frame, .chat-header-frame, .chat-messages-frame, .chat-toolbar, .chat-input-frame').forEach(el => {
-                el.style.backgroundColor = colorHex;
-            });
+            // Fondo del cuerpo teñido de manera suave
+            const msnBody = document.querySelector('.msn-body');
+            if (msnBody) {
+                // Mezcla el color elegido con el fondo para que no quede chillón
+                msnBody.style.backgroundColor = colorHex;
+            }
 
-            // Botón de enviar
+            // El botón de enviar toma el tono seleccionado
             const sendBtn = document.getElementById('sendBtn');
             if (sendBtn) {
-                sendBtn.style.backgroundColor = colorHex;
+                sendBtn.style.background = `linear-gradient(to bottom, #ffffff 0%, ${colorHex} 100%)`;
+                sendBtn.style.color = '#ffffff';
             }
         }
     </script>
