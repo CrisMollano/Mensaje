@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <!-- Barra de herramientas con selector de COLOR y FUENTE -->
+                <!-- Barra de herramientas con selector de COLOR, FUENTE y COLOR DE TEXTO -->
                 <div class="chat-toolbar">
                     <button class="tool-btn" id="btnEmoticons" title="Emoticones">😊 Emoticons</button>
                     <button class="tool-btn" id="btnZumbido" title="¡Mandar un zumbido!">⚡ Zumbido!</button>
@@ -126,14 +126,22 @@
                             <option value="'Courier New', Courier, monospace">Courier New</option>
                             <option value="'Comic Sans MS', cursive, sans-serif">Comic Sans</option>
                             <option value="Georgia, serif">Georgia</option>
-<option value="'Impact', Charcoal, sans-serif">Impact</option>
-<option value="'Trebuchet MS', Helvetica, sans-serif">Trebuchet MS</option>
-<option value="'Lucida Console', Monaco, monospace">Lucida Console (Retro Code)</option>
-<option value="'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino</option>
-<option value="'Century Gothic', sans-serif">Century Gothic</option>
-<option value="'Copperplate', 'Copperplate Gothic Light', fantasy">Copperplate</option>
-<option value="'Courier', monospace">Courier (Máquina de escribir)</option>
+                            <option value="'Impact', Charcoal, sans-serif">Impact</option>
+                            <option value="'Trebuchet MS', Helvetica, sans-serif">Trebuchet MS</option>
+                            <option value="'Lucida Console', Monaco, monospace">Lucida Console</option>
+                            <option value="'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino</option>
+                            <option value="'Century Gothic', sans-serif">Century Gothic</option>
+                            <option value="'Copperplate', 'Copperplate Gothic Light', fantasy">Copperplate</option>
+                            <option value="'Courier', monospace">Courier</option>
                         </select>
+                    </div>
+
+                    <!-- Botón redondo de COLOR DE TEXTO al lado de la fuente -->
+                    <div class="text-color-picker-round" title="Cambiar color del texto">
+                        <label for="textColorPicker" class="color-circle-btn">
+                            TEXTO
+                            <input type="color" id="textColorPicker" value="#333333">
+                        </label>
                     </div>
 
                     <div class="emoticon-menu hidden" id="emoticonMenu">
@@ -529,6 +537,23 @@
                 const nuevaFuente = e.target.value;
                 aplicarFuenteTema(nuevaFuente);
                 localStorage.setItem('msn_font_style', nuevaFuente);
+            });
+        }
+
+        // Lógica para cambiar el color de texto al escribir y guardarlo
+        const textColorPicker = document.getElementById('textColorPicker');
+
+        const colorTextoGuardado = localStorage.getItem('msn_text_color');
+        if (colorTextoGuardado) {
+            if (messageInput) messageInput.style.color = colorTextoGuardado;
+            if (textColorPicker) textColorPicker.value = colorTextoGuardado;
+        }
+
+        if (textColorPicker) {
+            textColorPicker.addEventListener('input', (e) => {
+                const nuevoColorTexto = e.target.value;
+                if (messageInput) messageInput.style.color = nuevoColorTexto;
+                localStorage.setItem('msn_text_color', nuevoColorTexto);
             });
         }
     </script>
