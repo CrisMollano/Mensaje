@@ -34,8 +34,8 @@ body {
     width: 320px;
     background: #ffffff;
     border-radius: 10px;
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.15);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
     overflow: hidden;
 }
 
@@ -57,18 +57,18 @@ body {
 .login-body input {
     padding: 8px 10px;
     border-radius: 6px;
-    border: 1px solid #a0a0a0;
-    box-shadow: inset 1px 2px 4px rgba(0,0,0,0.08);
+    border: 1px solid #999;
+    box-shadow: inset 1px 2px 5px rgba(0,0,0,0.15);
     font-size: 13px;
     outline: none;
 }
 
 .login-body button {
     padding: 8px;
-    background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
-    border: 1px solid #ccc;
+    background: linear-gradient(to bottom, #ffffff 0%, #eaeaea 100%);
+    border: 1px solid #bbb;
     border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
     font-weight: bold;
     cursor: pointer;
     color: #333;
@@ -92,9 +92,8 @@ body {
     overflow: hidden;
 }
 
-/* Barra de título con degradado continuo al blanco */
+/* Barra de título */
 .msn-title-bar {
-    background: linear-gradient(to right, #8ba278, #eaf2e8 70%, #ffffff 100%);
     color: white;
     padding: 8px 12px;
     display: flex;
@@ -102,7 +101,7 @@ body {
     align-items: center;
     cursor: default;
     flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     transition: background 0.3s ease;
 }
 
@@ -112,44 +111,41 @@ body {
     gap: 8px;
     font-weight: bold;
     font-size: 13px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
 
 /* Selector de color */
 .theme-picker {
     padding: 6px 14px;
-    background: #eaf2e8;
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 12px;
     flex-shrink: 0;
     color: #333;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.12);
     transition: background-color 0.3s ease;
 }
 
-/* Cuerpo principal con tintado suave y sombreado 12% */
+/* Cuerpo principal */
 .msn-body {
     display: flex;
     flex: 1;
     overflow: hidden;
     padding: 10px;
     gap: 10px;
-    background-color: #eaf2e8;
     transition: background-color 0.3s ease;
 }
 
-/* MARCOS CONTENEDORES CON SOMBREADO 12% Y BORDES SUAVES */
+/* MARCOS CONTENEDORES CON SOMBREADO AL 25% */
 .contact-panel-frame,
 .chat-header-frame,
 .chat-messages-frame,
 .chat-input-frame {
-    background: #dce7d9;
     padding: 5px;
     border-radius: 8px;
-    border: 1px solid rgba(0,0,0,0.06);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.12);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.22);
     display: flex;
     flex-direction: column;
     transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -173,15 +169,15 @@ body {
     height: 85px;
 }
 
-/* CAJAS INTERIORES BLANCAS CON BORDES REDONDEADOS Y SOMBRA INTERNA 12% */
+/* CAJAS INTERIORES CON SOMBRA INTERNA AL 25% */
 .contact-panel,
 .chat-header,
 .chat-messages,
 .chat-input-area {
     background: #ffffff;
     border-radius: 6px;
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.18);
+    box-shadow: inset 0 3px 8px rgba(0,0,0,0.22);
     overflow: hidden;
     flex: 1;
     display: flex;
@@ -197,7 +193,7 @@ body {
     align-items: center;
     padding: 8px 10px;
     background: #ffffff;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
     gap: 10px;
 }
 
@@ -206,8 +202,8 @@ body {
     background: #f8f9fa;
     padding: 4px;
     border-radius: 6px;
-    border: 1px solid #e0e0e0;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.15);
 }
 
 .user-info strong {
@@ -219,9 +215,8 @@ body {
     padding: 6px 10px;
     font-size: 11px;
     font-weight: bold;
-    color: #444;
-    background: #c2d8bc;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
+    color: #333;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
     transition: background-color 0.3s ease;
 }
 
@@ -257,7 +252,7 @@ body {
 .personal-substatus-box {
     padding: 5px 10px;
     background: #fff;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .personal-substatus-box input {
@@ -335,10 +330,9 @@ body {
 /* Barra de herramientas */
 .chat-toolbar {
     padding: 4px 6px;
-    background: #eaf2e8;
     border-radius: 6px;
-    border: 1px solid rgba(0,0,0,0.06);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.12);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
     display: flex;
     gap: 6px;
     position: relative;
@@ -347,10 +341,10 @@ body {
 }
 
 .tool-btn {
-    background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
-    border: 1px solid #ccc;
+    background: linear-gradient(to bottom, #ffffff 0%, #e8e8e8 100%);
+    border: 1px solid #bbb;
     border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     padding: 4px 10px;
     font-size: 11px;
     font-weight: 600;
@@ -359,12 +353,12 @@ body {
 }
 
 .tool-btn:active {
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
-    background: #e0e0e0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
+    background: #d8d8d8;
 }
 
 #btnZumbido {
-    background: linear-gradient(to bottom, #ffeeee 0%, #ffc4c4 100%);
+    background: linear-gradient(to bottom, #ffeeee 0%, #ffb8b8 100%);
     border-color: #d32f2f;
     color: #9a0000;
 }
@@ -376,8 +370,8 @@ body {
     left: 10px;
     background: #ffffff;
     border-radius: 8px;
-    border: 1px solid #ccc;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+    border: 1px solid #bbb;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     padding: 8px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -392,7 +386,7 @@ body {
 
 .emo-btn {
     background: white;
-    border: 1px solid #bbb;
+    border: 1px solid #ccc;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
@@ -421,17 +415,17 @@ body {
 
 .send-btn {
     width: 75px;
-    background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
-    border: 1px solid #ccc;
+    background: linear-gradient(to bottom, #ffffff 0%, #e8e8e8 100%);
+    border: 1px solid #bbb;
     border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     font-weight: bold;
     cursor: pointer;
     color: #333;
 }
 
 .send-btn:active {
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
 }
 
 .mobile-profile-bar {
@@ -482,7 +476,7 @@ body {
     background: #ffffff;
     border-radius: 8px 8px 0 0;
     border: 1px solid #0055ea;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.22);
     display: flex;
     align-items: center;
     padding: 10px;
