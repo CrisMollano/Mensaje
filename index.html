@@ -1,4 +1,6 @@
+Acá tenés el archivo index.html completo y actualizado, integrando la conversión automática a RGB para que el tinte se aplique de forma suave y armónica al 12% sobre el fondo, la barra de título, las herramientas y todos los marcos de los paneles:
 
+HTML
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -433,7 +435,7 @@
             });
         }
 
-        // Lógica para cambiar el color del marco grueso estilo MSN
+        // Lógica de color de ventana estilo MSN Plus con tintado sutil (RGB + Alfa)
         const colorPicker = document.getElementById('windowColorPicker');
         const msnTitleBar = document.querySelector('.msn-title-bar');
 
@@ -451,24 +453,43 @@
             });
         }
 
+        function hexToRgb(hex) {
+            let c = hex.replace('#', '');
+            if (c.length === 3) c = c.split('').map(x => x + x).join('');
+            const num = parseInt(c, 16);
+            return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+        }
+
         function aplicarColorTema(colorHex) {
-            // Barra superior con gradiente sutil
+            const { r, g, b } = hexToRgb(colorHex);
+
+            const colorFondoCuerpo = `rgba(${r}, ${g}, ${b}, 0.12)`;
+            const colorMarcoExt = `rgba(${r}, ${g}, ${b}, 0.22)`;
+            const colorEncabezadoLista = `rgba(${r}, ${g}, ${b}, 0.35)`;
+
             if (msnTitleBar) {
-                msnTitleBar.style.background = `linear-gradient(to right, ${colorHex}, #003092)`;
+                msnTitleBar.style.background = `linear-gradient(to right, ${colorHex}, rgba(${r},${g},${b},0.3) 70%, #ffffff 100%)`;
             }
 
-            // Fondo del cuerpo teñido de manera suave
             const msnBody = document.querySelector('.msn-body');
-            if (msnBody) {
-                // Mezcla el color elegido con el fondo para que no quede chillón
-                msnBody.style.backgroundColor = colorHex;
-            }
+            if (msnBody) msnBody.style.backgroundColor = colorFondoCuerpo;
 
-            // El botón de enviar toma el tono seleccionado
+            const themePicker = document.querySelector('.theme-picker');
+            if (themePicker) themePicker.style.backgroundColor = colorFondoCuerpo;
+
+            const chatToolbar = document.querySelector('.chat-toolbar');
+            if (chatToolbar) chatToolbar.style.backgroundColor = colorFondoCuerpo;
+
+            document.querySelectorAll('.contact-panel-frame, .chat-header-frame, .chat-messages-frame, .chat-input-frame').forEach(el => {
+                el.style.backgroundColor = colorMarcoExt;
+            });
+
+            const contactTitle = document.querySelector('.contact-list-title');
+            if (contactTitle) contactTitle.style.backgroundColor = colorEncabezadoLista;
+
             const sendBtn = document.getElementById('sendBtn');
             if (sendBtn) {
-                sendBtn.style.background = `linear-gradient(to bottom, #ffffff 0%, ${colorHex} 100%)`;
-                sendBtn.style.color = '#ffffff';
+                sendBtn.style.background = `linear-gradient(to bottom, #ffffff 0%, rgba(${r},${g},${b},0.2) 100%)`;
             }
         }
     </script>
