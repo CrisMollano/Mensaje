@@ -32,12 +32,6 @@
             </div>
         </div>
 
-        <!-- Selector de color de ventana estilo MSN Plus -->
-        <div class="theme-picker">
-            <span>Color de tema:</span>
-            <input type="color" id="windowColorPicker" value="#8ba278" style="cursor: pointer; border: 1px solid #7f9db9; background: white; width: 30px; height: 20px;">
-        </div>
-
         <!-- Notificación emergente retro estilo MSN -->
         <div id="msnToast" class="msn-toast hidden">
             <div class="toast-avatar">👤</div>
@@ -114,6 +108,14 @@
                     <button class="tool-btn" id="btnEmoticons" title="Emoticones">😊 Emoticons</button>
                     <button class="tool-btn" id="btnZumbido" title="¡Mandar un zumbido!">⚡ Zumbido!</button>
                 
+                    <!-- Selector de color redondo con texto COLOR al lado de Zumbido -->
+                    <div class="theme-picker-round" title="Cambiar color de tema">
+                        <label for="windowColorPicker" class="color-circle-btn">
+                            COLOR
+                            <input type="color" id="windowColorPicker" value="#8ba278">
+                        </label>
+                    </div>
+
                     <div class="emoticon-menu hidden" id="emoticonMenu">
                         <button class="emo-btn" data-emo=":)">😊</button>
                         <button class="emo-btn" data-emo=":D">😃</button>
@@ -432,7 +434,7 @@
             });
         }
 
-        // Lógica de color de ventana estilo MSN Plus con tintado sutil (RGB + Alfa)
+        // Lógica de color de tema
         const colorPicker = document.getElementById('windowColorPicker');
         const msnTitleBar = document.querySelector('.msn-title-bar');
 
@@ -470,9 +472,6 @@
 
             const msnBody = document.querySelector('.msn-body');
             if (msnBody) msnBody.style.backgroundColor = colorFondoCuerpo;
-
-            const themePicker = document.querySelector('.theme-picker');
-            if (themePicker) themePicker.style.backgroundColor = colorFondoCuerpo;
 
             const chatToolbar = document.querySelector('.chat-toolbar');
             if (chatToolbar) chatToolbar.style.backgroundColor = colorFondoCuerpo;
