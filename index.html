@@ -103,17 +103,29 @@
                     </div>
                 </div>
 
-                <!-- Barra de herramientas -->
+                <!-- Barra de herramientas con selector de COLOR y FUENTE -->
                 <div class="chat-toolbar">
                     <button class="tool-btn" id="btnEmoticons" title="Emoticones">😊 Emoticons</button>
                     <button class="tool-btn" id="btnZumbido" title="¡Mandar un zumbido!">⚡ Zumbido!</button>
                 
-                    <!-- Selector de color redondo con texto COLOR al lado de Zumbido -->
+                    <!-- Selector de color redondo con texto COLOR -->
                     <div class="theme-picker-round" title="Cambiar color de tema">
                         <label for="windowColorPicker" class="color-circle-btn">
                             COLOR
                             <input type="color" id="windowColorPicker" value="#8ba278">
                         </label>
+                    </div>
+
+                    <!-- Selector de tipografía/fuente al lado de COLOR -->
+                    <div class="font-picker-round" title="Cambiar tipo de letra">
+                        <select id="fontSelect" class="font-select-btn">
+                            <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI</option>
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="Tahoma, Geneva, sans-serif">Tahoma</option>
+                            <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                            <option value="'Courier New', Courier, monospace">Courier New</option>
+                            <option value="'Comic Sans MS', cursive, sans-serif">Comic Sans</option>
+                        </select>
                     </div>
 
                     <div class="emoticon-menu hidden" id="emoticonMenu">
@@ -487,6 +499,29 @@
             if (sendBtn) {
                 sendBtn.style.background = `linear-gradient(to bottom, #ffffff 0%, rgba(${r},${g},${b},0.2) 100%)`;
             }
+        }
+
+        // Lógica para cambiar la fuente/estilo de letra y guardarla
+        const fontSelect = document.getElementById('fontSelect');
+
+        function aplicarFuenteTema(fuente) {
+            document.body.style.fontFamily = fuente;
+            if (messageInput) messageInput.style.fontFamily = fuente;
+            if (chatMessages) chatMessages.style.fontFamily = fuente;
+        }
+
+        const fuenteGuardada = localStorage.getItem('msn_font_style');
+        if (fuenteGuardada) {
+            aplicarFuenteTema(fuenteGuardada);
+            if (fontSelect) fontSelect.value = fuenteGuardada;
+        }
+
+        if (fontSelect) {
+            fontSelect.addEventListener('change', (e) => {
+                const nuevaFuente = e.target.value;
+                aplicarFuenteTema(nuevaFuente);
+                localStorage.setItem('msn_font_style', nuevaFuente);
+            });
         }
     </script>
 </body>

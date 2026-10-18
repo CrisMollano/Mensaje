@@ -147,16 +147,16 @@ body {
     flex-shrink: 0;
 }
 
-/* Historial de mensajes ajustado para ceder espacio */
+/* Historial de mensajes */
 .chat-messages-frame {
     flex: 1;
     min-height: 120px;
 }
 
-/* Cuadro de texto para escribir ampliado verticalmente */
+/* Cuadro de texto para escribir */
 .chat-input-frame {
     flex-shrink: 0;
-    height: 140px; /* Aumentado de 85px a 140px para escribir con total comodidad */
+    height: 140px;
 }
 
 /* CAJAS INTERIORES CON SOMBRA INTERNA AL 25% */
@@ -399,6 +399,36 @@ body {
     cursor: pointer;
 }
 
+/* Selector de FUENTE al lado de COLOR */
+.font-picker-round {
+    display: flex;
+    align-items: center;
+}
+
+.font-select-btn {
+    height: 40px;
+    border-radius: 20px;
+    background: linear-gradient(to bottom, #ffffff 0%, #e8e8e8 100%);
+    border: 1px solid #bbb;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    padding: 0 14px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.15s ease;
+}
+
+.font-select-btn:hover {
+    background: #ffffff;
+    border-color: #999;
+}
+
+.font-select-btn:active {
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
+}
+
 /* Menú de emoticones */
 .emoticon-menu {
     position: absolute;
@@ -433,10 +463,10 @@ body {
     background: #ffe3a8;
 }
 
-/* Área de entrada de texto optimizada con más altura interna */
+/* Área de entrada de texto */
 .chat-input-area {
-    padding: 8px;
-    gap: 8px;
+    padding: 6px;
+    gap: 6px;
     background: #ffffff;
 }
 
@@ -444,21 +474,18 @@ body {
     flex: 1;
     resize: none;
     border: none;
-    padding: 6px;
-    font-size: 13px;
+    padding: 4px;
+    font-size: 12px;
     outline: none;
-    height: 100%;
 }
 
 .send-btn {
-    width: 85px;
-    height: 100%;
+    width: 75px;
     background: linear-gradient(to bottom, #ffffff 0%, #e8e8e8 100%);
     border: 1px solid #bbb;
     border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
     font-weight: bold;
-    font-size: 13px;
     cursor: pointer;
     color: #333;
 }
