@@ -316,7 +316,7 @@ body {
 
 /* Barra de herramientas */
 .chat-toolbar {
-    padding: 4px 6px;
+    padding: 10px 8px; /* Aumentado de 4px a 10px para ganar ese 25% de alto hacia arriba */
     border-radius: 6px;
     border: 1px solid rgba(0,0,0,0.12);
     box-shadow: 0 3px 6px rgba(0,0,0,0.2);
@@ -398,8 +398,8 @@ body {
 
 /* Menú de emoticones */
 .emoticon-menu {
-    position: absolute;
-    bottom: 38px;
+   position: absolute;
+    bottom: 48px; /* Subido para acompañar el nuevo alto de la barra */
     left: 10px;
     background: #ffffff;
     border-radius: 8px;
